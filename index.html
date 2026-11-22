@@ -50,28 +50,10 @@ alert("Bem-vindo, "+n+"!");
 let gols=0;
 function somGol(){
 try{
-let ctx=new (window.AudioContext||window.webkitAudioContext)();
-let apito=ctx.createOscillator(); apito.type='square'; apito.frequency.value=2200;
-let g1=ctx.createGain(); g1.gain.value=0.15;
-apito.connect(g1); g1.connect(ctx.destination);
-apito.start(); setTimeout(()=>apito.stop(),300);
-setTimeout(()=>{
-let dur=1.5; let buf=ctx.createBuffer(1, ctx.sampleRate*dur, ctx.sampleRate);
-let d=buf.getChannelData(0);
-for(let i=0;i<d.length;i++){ d[i]=(Math.random()*2-1)*0.3; }
-let src=ctx.createBufferSource(); src.buffer=buf;
-let g2=ctx.createGain(); g2.gain.value=0.5;
-src.connect(g2); g2.connect(ctx.destination); src.start();
-},350);
-setTimeout(()=>{
-let notas=[523,659,784,1046,1318];
-notas.forEach((f,i)=>{
-let o=ctx.createOscillator(); o.type='sawtooth'; o.frequency.value=f;
-let g=ctx.createGain(); g.gain.value=0.15;
-o.connect(g); g.connect(ctx.destination);
-o.start(ctx.currentTime+i*0.15); o.stop(ctx.currentTime+i*0.15+0.4);
-});
-},300);
+let msg=new SpeechSynthesisUtterance("Gooooool! Gol do Futebol Sem Jeito! Que golaço!");
+msg.lang='pt-BR'; msg.rate=0.9; msg.pitch=1.2; msg.volume=1;
+window.speechSynthesis.cancel();
+window.speechSynthesis.speak(msg);
 }catch(e){}
 }
 function chutar(){
@@ -82,7 +64,10 @@ somGol();
 let bola=document.getElementById('bola');
 bola.style.left=Math.floor(Math.random()*80)+"%";
 bola.style.top=Math.floor(Math.random()*130)+"px";
-if(gols==5){alert("VOCÊ É CRAQUE! 5 GOLS! 🏆")}
+if(gols==5){
+setTimeout(()=>{let m=new SpeechSynthesisUtterance("Você é craque! Cinco gols!"); m.lang='pt-BR'; window.speechSynthesis.speak(m);},1000);
+alert("VOCÊ É CRAQUE! 5 GOLS! 🏆")
+}
 }
 </script>
 </body>
