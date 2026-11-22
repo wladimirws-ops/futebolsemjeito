@@ -1,114 +1,69 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Futebol Sem Jeito</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUTEBOL SEM JEITO</title>
 <style>
-body{background:#0f1e2e;color:white;font-family:Arial;text-align:center;padding:20px}
-.card{background:#22b573;border-radius:20px;padding:20px;max-width:400px;margin:20px auto;overflow:hidden}
-button{padding:10px 15px;border:none;border-radius:10px;font-weight:bold;cursor:pointer}
-.campo{height:90px;position:relative;background:#1a9a52;border-radius:10px;margin:10px 0;overflow:hidden}
-.jog1{font-size:55px;position:absolute;left:10px;bottom:5px}
-.jog2{font-size:55px;position:absolute;left:130px;bottom:5px}
-.gol{font-size:60px;position:absolute;right:10px;bottom:5px;text-align:center}
-.nome-goleiro{font-size:12px;display:block;color:white;font-weight:bold}
-.bola2{font-size:35px;position:absolute;bottom:10px;left:70px}
-.tocando .bola2{animation:toca 1.6s forwards}
-.tocando .jog1{animation:chute1 0.5s}
-.tocando .jog2{animation:chute2 1s}
-.tocando .gol{animation:agarra 1.6s}
-@keyframes toca{0%{left:70px;bottom:10px}25%{left:165px;bottom:20px}50%{left:70px;bottom:10px}75%{left:165px;bottom:20px}100%{left:290px;bottom:30px;transform:rotate(720deg)}}
-@keyframes chute1{0%{transform:rotate(0)}50%{transform:rotate(-20deg)}100%{transform:rotate(0)}}
-@keyframes chute2{0%{transform:rotate(0)}50%{transform:rotate(-20deg)}100%{transform:rotate(0)}}
-@keyframes agarra{0%{transform:translateY(0)}80%{transform:translateY(-15px) rotate(-10deg)}100%{transform:translateY(0)}}
-.pista{height:45px;position:relative;overflow:hidden;background:#1a9a52;border-radius:10px;margin:10px 0}
-.corredor{font-size:35px;position:absolute;top:2px;left:-50px}
-.correndo .corredor{animation:correr 1.2s linear forwards}
-@keyframes correr{0%{left:-50px}100%{left:105%}}
-.cabeca-area{height:90px;position:relative;background:#1a9a52;border-radius:10px;margin:10px 0;overflow:hidden}
-.cabeca-jogador{font-size:55px;position:absolute;bottom:0;left:30px}
-.cabeca-bola{font-size:35px;position:absolute;bottom:60px;left:50px}
-.cabeceando .cabeca-jogador{animation:pular 0.9s}
-.cabeceando .cabeca-bola{animation:cabecada 0.9s forwards}
-@keyframes pular{0%{bottom:0}50%{bottom:35px;transform:rotate(-15deg)}100%{bottom:0}}
-@keyframes cabecada{0%{bottom:60px;left:50px}50%{bottom:80px;left:80px}100%{bottom:20px;left:250px;transform:rotate(360deg)}}
+body{margin:0;font-family:Arial;background:#111;color:white;text-align:center}
+header{background:#FFD700;color:#111;padding:20px}
+header h1{margin:0;font-size:32px}
+header p{margin:5px}
+.box{background:#222;margin:15px;padding:20px;border-radius:15px;border:2px solid #FFD700}
+input{padding:12px;border-radius:10px;border:none;width:70%;font-size:16px}
+button{background:#FFD700;border:none;padding:12px 20px;border-radius:10px;font-weight:bold;font-size:16px;margin-top:10px}
+#campo{background:#00a651;height:220px;border-radius:15px;position:relative;overflow:hidden;margin-top:15px;border:3px solid white}
+#bola{font-size:55px;position:absolute;left:40%;top:70px;cursor:pointer;transition:0.2s}
+#gol{position:absolute;top:0;left:35%;width:30%;height:25px;background:white;color:black;font-weight:bold;font-size:12px;border-radius:0 0 10px 10px}
 </style>
 </head>
 <body>
-<h3>Qual é o seu nome?</h3>
+<header>
+<h1>⚽ FUTEBOL SEM JEITO</h1>
+<p>By Wladimir - Futuro Programador</p>
+</header>
+
+<div class="box">
+<h2>Olá, <span id="nomeTxt">Craque</span>!</h2>
 <input id="nome" placeholder="Digite seu nome">
-<button onclick="entrar()" style="background:#22b573;color:white">Entrar</button>
-<div class="card">
-<p>⚽ FUTEBOL SEM JEITO ⚽</p>
-<h2>Futuro Programador</h2>
-<p>Posição: Atacante de Código</p>
-<div id="campo" class="campo">
-<span class="jog1">🧑‍💻</span>
-<span class="jog2">👦</span>
-<span id="bola2" class="bola2">⚽</span>
-<span class="gol">🧤<span class="nome-goleiro">WICTOR</span></span>
+<br><button onclick="entrar()">Entrar</button>
 </div>
-<p>Dois jogadores tocando a bola!</p>
-<div id="pista" class="pista"><span class="corredor">🏃‍♂️💨</span></div>
-<div id="cabecaArea" class="cabeca-area">
-<span class="cabeca-jogador">🤾</span>
-<span class="cabeca-bola">⚽</span>
+
+<div class="box">
+<h2>🎮 JOGO: CHUTA A BOLA!</h2>
+<p>Clique na bola pra fazer GOL!</p>
+<h2>GOLS: <span id="gols">0</span> 🏆</h2>
+<div id="campo">
+<div id="gol">GOL ⚽</div>
+<div id="bola" onclick="chutar()">⚽</div>
 </div>
-<p>Olha ele cabeceando!</p>
-<h1 id="gols">0</h1>
-<p>GOLS DE CÓDIGO</p>
-<button onclick="fazerGol()" style="background:white;color:green">⚽ FAZER GOL!</button>
-<button onclick="zerar()" style="background:black;color:white">Zerar</button>
-<p id="msg">Você ainda não fez gol</p>
-<p>🔊 Lembre de deixar o som ligado!</p>
+<button onclick="chutar()">CHUTAR! 🦶</button>
+<p id="msg">Vai craque, faz o gol!</p>
 </div>
+
+<div class="box">
+<h3>🔥 Wictor - Futuro Programador</h3>
+<p>Site feito por mim mesmo!</p>
+</div>
+
 <script>
-let gols = Number(localStorage.getItem("gols")) || 0;
-document.getElementById("gols").innerText = gols;
-if(gols > 0){ document.getElementById("msg").innerText = "Você já fez " + gols + " gols!"; }
-function fala(texto){
-  try{
-    window.speechSynthesis.cancel();
-    let v = new SpeechSynthesisUtterance(texto);
-    v.lang = "pt-BR"; v.rate = 1.1;
-    window.speechSynthesis.speak(v);
-  }catch(e){}
-}
 function entrar(){
-  let n = document.getElementById("nome").value;
-  if(n){ fala("Bem vindo " + n); alert("Bem-vindo, " + n + "!"); }
+let n=document.getElementById('nome').value;
+if(n==""){alert("Digite seu nome!");return}
+document.getElementById('nomeTxt').innerText=n;
+alert("Bem-vindo, "+n+"! Agora joga!");
 }
-function fazerGol(){
-  fala("Tocou, tocou, chutou!");
-  let campo = document.getElementById("campo");
-  let pista = document.getElementById("pista");
-  let cab = document.getElementById("cabecaArea");
-  campo.classList.remove("tocando");
-  pista.classList.remove("correndo");
-  cab.classList.remove("cabeceando");
-  void campo.offsetWidth;
-  campo.classList.add("tocando");
-  pista.classList.add("correndo");
-  cab.classList.add("cabeceando");
-  let agarrou = Math.random() < 0.5;
-  setTimeout(function(){
-    if(agarrou){
-      document.getElementById("msg").innerText = "🧤 AGARRA A BOLA, WICTOR! O goleiro agarrou!";
-      fala("Agarra a bola, Wictor!");
-    } else {
-      gols++;
-      localStorage.setItem("gols", gols);
-      document.getElementById("gols").innerText = gols;
-      document.getElementById("msg").innerText = "GOOOL! Que tabelinha! Você fez " + gols + " gols!";
-      fala("Goool! Que tabelinha! Você fez " + gols + " gols!");
-    }
-  }, 1700);
-}
-function zerar(){
-  gols = 0; localStorage.setItem("gols", 0);
-  document.getElementById("gols").innerText = 0;
-  document.getElementById("msg").innerText = "Você ainda não fez gol";
-  fala("Zerado!");
+let gols=0;
+function chutar(){
+gols++;
+document.getElementById('gols').innerText=gols;
+document.getElementById('msg').innerText="GOOOOL! Você já fez "+gols+" gols!";
+let bola=document.getElementById('bola');
+let x=Math.floor(Math.random()*80);
+let y=Math.floor(Math.random()*130);
+bola.style.left=x+"%";
+bola.style.top=y+"px";
+if(gols==5){alert("VOCÊ É CRAQUE! 5 GOLS! 🏆")}
 }
 </script>
 </body>
