@@ -8,19 +8,18 @@
 body{margin:0;font-family:Arial;background:#111;color:white;text-align:center}
 header{background:#FFD700;color:#111;padding:20px}
 header h1{margin:0;font-size:32px}
-header p{margin:5px}
 .box{background:#222;margin:15px;padding:20px;border-radius:15px;border:2px solid #FFD700}
 input{padding:12px;border-radius:10px;border:none;width:70%;font-size:16px}
 button{background:#FFD700;border:none;padding:12px 20px;border-radius:10px;font-weight:bold;font-size:16px;margin-top:10px}
 #campo{background:#00a651;height:220px;border-radius:15px;position:relative;overflow:hidden;margin-top:15px;border:3px solid white}
-#bola{font-size:55px;position:absolute;left:40%;top:70px;cursor:pointer;transition:0.2s}
+#bola{font-size:55px;position:absolute;left:40%;top:70px;cursor:pointer}
 #gol{position:absolute;top:0;left:35%;width:30%;height:25px;background:white;color:black;font-weight:bold;font-size:12px;border-radius:0 0 10px 10px}
 </style>
 </head>
 <body>
 <header>
 <h1>⚽ FUTEBOL SEM JEITO</h1>
-<p>By Wladimir - Futuro Programador</p>
+<p>By Wladimir</p>
 </header>
 
 <div class="box">
@@ -41,28 +40,34 @@ button{background:#FFD700;border:none;padding:12px 20px;border-radius:10px;font-
 <p id="msg">Vai craque, faz o gol!</p>
 </div>
 
-<div class="box">
-<h3>🔥 Wictor - Futuro Programador</h3>
-<p>Site feito por mim mesmo!</p>
-</div>
-
 <script>
 function entrar(){
 let n=document.getElementById('nome').value;
 if(n==""){alert("Digite seu nome!");return}
 document.getElementById('nomeTxt').innerText=n;
-alert("Bem-vindo, "+n+"! Agora joga!");
+alert("Bem-vindo, "+n+"!");
 }
 let gols=0;
+function somGol(){
+try{
+let ctx=new (window.AudioContext||window.webkitAudioContext)();
+let o=ctx.createOscillator();
+o.type='square'; o.frequency.value=600;
+let g=ctx.createGain(); g.gain.value=0.2;
+o.connect(g); g.connect(ctx.destination);
+o.start();
+setTimeout(()=>{o.frequency.value=900},150);
+setTimeout(()=>{o.stop()},400);
+}catch(e){}
+}
 function chutar(){
 gols++;
 document.getElementById('gols').innerText=gols;
 document.getElementById('msg').innerText="GOOOOL! Você já fez "+gols+" gols!";
+somGol();
 let bola=document.getElementById('bola');
-let x=Math.floor(Math.random()*80);
-let y=Math.floor(Math.random()*130);
-bola.style.left=x+"%";
-bola.style.top=y+"px";
+bola.style.left=Math.floor(Math.random()*80)+"%";
+bola.style.top=Math.floor(Math.random()*130)+"px";
 if(gols==5){alert("VOCÊ É CRAQUE! 5 GOLS! 🏆")}
 }
 </script>
