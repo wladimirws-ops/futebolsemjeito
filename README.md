@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FUTEBOL SEM JEITO</title>
 <style>
-body{margin:0;font-family:Arial;background:#111;color:white;text-align:center}
-header{background:#FFD700;color:#111;padding:20px}
+body{margin:0;font-family:Arial;background:#0A1A3F;color:white;text-align:center}
+header{background:#007BFF;color:white;padding:20px}
 header h1{margin:0;font-size:32px}
-.box{background:#222;margin:15px;padding:20px;border-radius:15px;border:2px solid #FFD700}
+.box{background:#132A5E;margin:15px;padding:20px;border-radius:15px;border:2px solid #00C6FF}
 input{padding:12px;border-radius:10px;border:none;width:70%;font-size:16px}
-button{background:#FFD700;border:none;padding:12px 20px;border-radius:10px;font-weight:bold;font-size:16px;margin-top:10px;cursor:pointer}
+button{background:#00C6FF;color:#0A1A3F;border:none;padding:12px 20px;border-radius:10px;font-weight:bold;font-size:16px;margin-top:10px;cursor:pointer}
 .wpp{background:#25D366;color:white}
 #campo{background:#00a651;height:240px;border-radius:15px;position:relative;overflow:hidden;margin-top:15px;border:3px solid white}
 #bola{font-size:55px;position:absolute;left:40%;top:150px;cursor:pointer;transition:0.2s}
@@ -73,10 +73,8 @@ if(tempo<=0){ clearInterval(timer); jogando=false; document.getElementById('msg'
 }
 function chutar(){
 if(!jogando){alert("Aperta COMEÇAR JOGO primeiro!"); return;}
-// goleiro se mexe
 let gol=document.getElementById('goleiro');
 gol.style.left=Math.floor(Math.random()*80)+"%";
-// 30% de chance de defender
 if(Math.random()<0.3){
 defesas++; document.getElementById('defesas').innerText=defesas;
 document.getElementById('msg').innerText="DEFENDEU! O goleiro pegou! 🧤";
