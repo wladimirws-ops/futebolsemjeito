@@ -1,12 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUTEBOL SEM JEITO</title>
+<style>
+body{margin:0;font-family:Arial;background:#111;color:white;text-align:center}
+header{background:#FFD700;color:#111;padding:20px}
+header h1{margin:0;font-size:32px}
+.box{background:#222;margin:15px;padding:20px;border-radius:15px;border:2px solid #FFD700}
+input{padding:12px;border-radius:10px;border:none;width:70%;font-size:16px}
+button{background:#FFD700;border:none;padding:12px 20px;border-radius:10px;font-weight:bold;font-size:16px;margin-top:10px}
+#campo{background:#00a651;height:220px;border-radius:15px;position:relative;overflow:hidden;margin-top:15px;border:3px solid white}
+#bola{font-size:55px;position:absolute;left:40%;top:70px;cursor:pointer}
+#gol{position:absolute;top:0;left:35%;width:30%;height:25px;background:white;color:black;font-weight:bold;font-size:12px;border-radius:0 0 10px 10px}
+</style>
+</head>
+<body>
+<header>
+<h1>⚽ FUTEBOL SEM JEITO</h1>
+<p>By Wladimir</p>
+</header>
+
+<div class="box">
+<h2>Olá, <span id="nomeTxt">Craque</span>!</h2>
+<input id="nome" placeholder="Digite seu nome">
+<br><button onclick="entrar()">Entrar</button>
+</div>
+
+<div class="box">
+<h2>🎮 JOGO: CHUTA A BOLA!</h2>
+<p>Clique na bola pra fazer GOL!</p>
+<h2>GOLS: <span id="gols">0</span> 🏆</h2>
+<div id="campo">
+<div id="gol">GOL ⚽</div>
+<div id="bola" onclick="chutar()">⚽</div>
+</div>
+<button onclick="chutar()">CHUTAR! 🦶</button>
+<p id="msg">Vai craque, faz o gol!</p>
+</div>
+
+<script>
+function entrar(){
+let n=document.getElementById('nome').value;
+if(n==""){alert("Digite seu nome!");return}
+document.getElementById('nomeTxt').innerText=n;
+alert("Bem-vindo, "+n+"!");
+}
+let gols=0;
 function somGol(){
 try{
 let ctx=new (window.AudioContext||window.webkitAudioContext)();
-// APITO
 let apito=ctx.createOscillator(); apito.type='square'; apito.frequency.value=2200;
 let g1=ctx.createGain(); g1.gain.value=0.15;
 apito.connect(g1); g1.connect(ctx.destination);
 apito.start(); setTimeout(()=>apito.stop(),300);
-// TORCIDA - barulho de festa
 setTimeout(()=>{
 let dur=1.5; let buf=ctx.createBuffer(1, ctx.sampleRate*dur, ctx.sampleRate);
 let d=buf.getChannelData(0);
@@ -15,7 +63,6 @@ let src=ctx.createBufferSource(); src.buffer=buf;
 let g2=ctx.createGain(); g2.gain.value=0.5;
 src.connect(g2); g2.connect(ctx.destination); src.start();
 },350);
-// GOOOOL - som subindo
 setTimeout(()=>{
 let notas=[523,659,784,1046,1318];
 notas.forEach((f,i)=>{
@@ -27,3 +74,16 @@ o.start(ctx.currentTime+i*0.15); o.stop(ctx.currentTime+i*0.15+0.4);
 },300);
 }catch(e){}
 }
+function chutar(){
+gols++;
+document.getElementById('gols').innerText=gols;
+document.getElementById('msg').innerText="GOOOOL! Você já fez "+gols+" gols!";
+somGol();
+let bola=document.getElementById('bola');
+bola.style.left=Math.floor(Math.random()*80)+"%";
+bola.style.top=Math.floor(Math.random()*130)+"px";
+if(gols==5){alert("VOCÊ É CRAQUE! 5 GOLS! 🏆")}
+}
+</script>
+</body>
+</html>
