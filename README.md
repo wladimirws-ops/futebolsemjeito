@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUTEBOL SEM JEITO</title>
+<style>
+body{margin:0;font-family:Arial;background:#111;color:white;text-align:center}
+header{background:#FFD700;color:#111;padding:20px}
+header h1{margin:0;font-size:32px}
+.box{background:#222;margin:15px;padding:20px;border-radius:15px;border:2px solid #FFD700}
+input{padding:12px;border-radius:10px;border:none;width:70%;font-size:16px}
+button{background:#FFD700;border:none;padding:12px 20px;border-radius:10px;font-weight:bold;font-size:16px;margin-top:10px;cursor:pointer}
+.wpp{background:#25D366;color:white}
+#campo{background:#00a651;height:240px;border-radius:15px;position:relative;overflow:hidden;margin-top:15px;border:3px solid white}
+#bola{font-size:55px;position:absolute;left:40%;top:150px;cursor:pointer;transition:0.2s}
+#gol{position:absolute;top:0;left:35%;width:30%;height:25px;background:white;color:black;font-weight:bold;font-size:12px;border-radius:0 0 10px 10px}
+#goleiro{font-size:55px;position:absolute;left:45%;top:10px;transition:0.3s}
+</style>
+</head>
+<body>
+<header>
+<h1>⚽ FUTEBOL SEM JEITO</h1>
+<p>By Wladimir</p>
+</header>
+
+<div class="box">
+<h2>Olá, <span id="nomeTxt">Craque</span>!</h2>
+<input id="nome" placeholder="Digite seu nome">
+<br><button onclick="entrar()">Entrar</button>
+</div>
+
+<div class="box">
+<h2>🎮 CHUTA A BOLA!</h2>
+<p>⏰ Tempo: <span id="tempo">30</span>s | GOLS: <span id="gols">0</span> 🏆 | Defesas: <span id="defesas">0</span> 🧤</p>
+<div id="campo">
+<div id="gol">GOL ⚽</div>
+<div id="goleiro">🧤</div>
+<div id="bola" onclick="chutar()">⚽</div>
+</div>
+<button onclick="iniciar()">COMEÇAR JOGO ▶️</button>
+<br>
+<button onclick="chutar()">CHUTAR! 🦶</button>
+<p id="msg">Aperta COMEÇAR e faz gol!</p>
+</div>
+
+<div class="box">
+<h2>📲 CHAMA OS AMIGOS!</h2>
+<button class="wpp" onclick="compartilhar()">Compartilhar no WhatsApp</button>
+</div>
+
+<script>
+let gols=0, defesas=0, tempo=30, jogando=false, timer=null;
+function entrar(){
+let n=document.getElementById('nome').value;
+if(n==""){alert("Digite seu nome!");return}
+document.getElementById('nomeTxt').innerText=n;
+let m=new SpeechSynthesisUtterance("Bem vindo "+n+" ao Futebol Sem Jeito!"); m.lang='pt-BR'; window.speechSynthesis.speak(m);
+}
+function falar(txt){ let m=new SpeechSynthesisUtterance(txt); m.lang='pt-BR'; m.rate=0.9; window.speechSynthesis.cancel(); window.speechSynthesis.speak(m); }
+function iniciar(){
+gols=0; defesas=0; tempo=30; jogando=true;
+document.getElementById('gols').innerText=0;
+document.getElementById('defesas').innerText=0;
+document.getElementById('tempo').innerText=30;
+document.getElementById('msg').innerText="VAI! Faz gol!";
+falar("Começou! Faz gol!");
+clearInterval(timer);
+timer=setInterval(()=>{
+tempo--; document.getElementById('tempo').innerText=tempo;
+if(tempo<=0){ clearInterval(timer); jogando=false; document.getElementById('msg').innerText="FIM! Você fez "+gols+" gols!"; falar("Fim de jogo! Você fez "+gols+" gols!"); alert("FIM! Você fez "+gols+" gols!"); }
+},1000);
+}
+function chutar(){
+if(!jogando){alert("Aperta COMEÇAR JOGO primeiro!"); return;}
+// goleiro se mexe
+let gol=document.getElementById('goleiro');
+gol.style.left=Math.floor(Math.random()*80)+"%";
+// 30% de chance de defender
+if(Math.random()<0.3){
+defesas++; document.getElementById('defesas').innerText=defesas;
+document.getElementById('msg').innerText="DEFENDEU! O goleiro pegou! 🧤";
+falar("Que defesa!"); return;
+}
+gols++; document.getElementById('gols').innerText=gols;
+document.getElementById('msg').innerText="GOOOOL! Você já fez "+gols+" gols!";
+falar("Goooool! Gol do Futebol Sem Jeito! Que golaço!");
+let bola=document.getElementById('bola');
+bola.style.left=Math.floor(Math.random()*80)+"%";
+bola.style.top=(120+Math.floor(Math.random()*80))+"px";
+}
+function compartilhar(){
+let texto="Joga comigo no FUTEBOL SEM JEITO! ⚽🔥 "+window.location.href;
+window.open("https://wa.me/?text="+encodeURIComponent(texto),"_blank");
+}
+</script>
+</body>
+</html>
