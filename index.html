@@ -1,126 +1,15 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MORTAL GOL - SCORPION VS SUB-ZERO</title>
-<style>
-body{margin:0;font-family:Arial;background:#000;color:white;text-align:center}
-header{background:linear-gradient(90deg,#FFD700,#007BFF);color:black;padding:15px}
-header h1{margin:0;font-size:24px}
-.box{background:#1A1A1A;margin:10px;padding:12px;border-radius:15px;border:2px solid #FFD700}
-#placar{font-size:22px;font-weight:bold}
-#campo{background:#00a651;height:280px;border-radius:15px;position:relative;overflow:hidden;border:3px solid white;margin:10px}
-.gol{position:absolute;top:0;width:12%;height:80px;background:white;color:black;font-weight:bold;font-size:11px;display:flex;align-items:center;justify-content:center}
-#golE{left:0} #golD{right:0}
-.jog{position:absolute;font-size:52px;transition:0.15s}
-#j1{left:25%;top:120px} #j2{left:65%;top:120px}
-#bola{position:absolute;font-size:35px;left:48%;top:150px;transition:0.15s}
-.vida{height:16px;background:#333;border-radius:10px;margin:5px;overflow:hidden}
-#vida1{background:#FFD700;width:100%}
-#vida2{background:#00C6FF;width:100%}
-button{padding:12px 10px;border-radius:10px;border:none;font-weight:bold;font-size:14px;margin:3px;cursor:pointer}
-.btn1{background:#FFD700;color:black}
-.btn2{background:#00C6FF;color:black}
-.btnGol{background:red;color:white;width:90%;font-size:18px}
-</style>
-</head>
-<body>
-<header><h1>💀 MORTAL GOL 💀</h1><p>SCORPION vs SUB-ZERO - Quem fizer 3 gols vence!</p></header>
-
-<div class="box">
-<div id="placar">🔥 SCORPION <span id="g1">0</span> X <span id="g2">0</span> SUB-ZERO ❄️</div>
-<p id="msg">Aperta COMEÇAR A LUTA!</p>
-<button class="btnGol" onclick="comecar()">⚔️ COMEÇAR A LUTA ⚔️</button>
-</div>
-
-<div class="box">
-<p>🔥 SCORPION - Vida</p><div class="vida"><div id="vida1" class="vida" style="margin:0"></div></div>
-<p>❄️ SUB-ZERO - Vida</p><div class="vida"><div id="vida2" class="vida" style="margin:0"></div></div>
-</div>
-
-<div id="campo">
-<div id="golE" class="gol">GOL SCORPION</div>
-<div id="golD" class="gol">GOL SUB-ZERO</div>
-<div id="j1" class="jog">🥷</div>
-<div id="j2" class="jog">🥶</div>
-<div id="bola">⚽</div>
-</div>
-
-<div class="box">
-<p><b>🔥 JOGADOR 1 - SCORPION</b></p>
-<button class="btn1" onclick="mover(1,-1)">⬅️</button>
-<button class="btn1" onclick="mover(1,1)">➡️</button>
-<button class="btn1" onclick="soco(1)">👊 SOCO</button>
-<button class="btn1" onclick="especial(1)">🔥 FOGO!</button>
-<button class="btn1" onclick="chutar(1)">🦶 CHUTAR</button>
-</div>
-
-<div class="box">
-<p><b>❄️ JOGADOR 2 - SUB-ZERO</b></p>
-<button class="btn2" onclick="mover(2,-1)">⬅️</button>
-<button class="btn2" onclick="mover(2,1)">➡️</button>
-<button class="btn2" onclick="soco(2)">👊 SOCO</button>
-<button class="btn2" onclick="especial(2)">❄️ GELO!</button>
-<button class="btn2" onclick="chutar(2)">🦶 CHUTAR</button>
-</div>
-
-<div class="box"><button style="background:#25D366;color:white;width:90%" onclick="compartilhar()">Compartilhar no WhatsApp 📲</button></div>
-
-<script>
-let pos1=25, pos2=65, bolaPos=48, v1=100, v2=100, g1=0, g2=0, jogando=false;
-function falar(t){let m=new SpeechSynthesisUtterance(t);m.lang='pt-BR';window.speechSynthesis.cancel();window.speechSynthesis.speak(m);}
-function comecar(){pos1=25;pos2=65;bolaPos=48;v1=100;v2=100;g1=0;g2=0;jogando=true;atualizar();document.getElementById('msg').innerText="FIGHT! Lutem e façam gol!";falar("Mortal Gol! Scorpion contra Sub Zero! Fight!");}
-function atualizar(){
-document.getElementById('j1').style.left=pos1+"%";
-document.getElementById('j2').style.left=pos2+"%";
-document.getElementById('bola').style.left=bolaPos+"%";
-document.getElementById('vida1').style.width=v1+"%";
-document.getElementById('vida2').style.width=v2+"%";
-document.getElementById('g1').innerText=g1;
-document.getElementById('g2').innerText=g2;
-}
-function mover(jog,dir){
-if(!jogando)return;
-if(jog==1)pos1=Math.max(5,Math.min(90,pos1+dir*8));
-else pos2=Math.max(5,Math.min(90,pos2+dir*8));
-atualizar();
-}
-function soco(jog){
-if(!jogando)return;
-let dist=Math.abs(pos1-pos2);
-if(dist>18){document.getElementById('msg').innerText="Errou! Chega mais perto!";return;}
-if(jog==1){v2-=20;document.getElementById('msg').innerText="SCORPION deu um SOCÃO! 👊🔥";falar("Que soco do Scorpion!");}
-else{v1-=20;document.getElementById('msg').innerText="SUB-ZERO deu um SOCÃO! 👊❄️";falar("Que soco do Sub Zero!");}
-checarKO(); atualizar();
-}
-function especial(jog){
-if(!jogando)return;
-let dist=Math.abs(pos1-pos2);
-if(dist>25){document.getElementById('msg').innerText="Chega mais perto pra usar o especial!";return;}
-if(jog==1){v2-=30;document.getElementById('msg').innerText="🔥 SCORPION: GET OVER HERE! FOGO!";falar("Get over here!");}
-else{v1-=30;document.getElementById('msg').innerText="❄️ SUB-ZERO CONGELOU! GELO!";falar("Sub Zero congelou!");}
-checarKO(); atualizar();
-}
-function checarKO(){
-if(v1<=0){v1=0;g2++;document.getElementById('msg').innerText="K.O.! SUB-ZERO fez ponto!";v1=100;v2=100;}
-if(v2<=0){v2=0;g1++;document.getElementById('msg').innerText="K.O.! SCORPION fez ponto!";v1=100;v2=100;}
-verificar();
-}
-function chutar(jog){
-if(!jogando)return;
-let minhaPos=jog==1?pos1:pos2;
-if(Math.abs(minhaPos-bolaPos)>15){document.getElementById('msg').innerText="Chega perto da bola primeiro!";return;}
-if(jog==1){bolaPos+=25;if(bolaPos>=88){g1++;document.getElementById('msg').innerText="GOOOOL DO SCORPION! 🔥⚽";falar("Gooool do Scorpion! Fatality!");bolaPos=48;}}
-else{bolaPos-=25;if(bolaPos<=8){g2++;document.getElementById('msg').innerText="GOOOOL DO SUB-ZERO! ❄️⚽";falar("Gooool do Sub Zero! Fatality!");bolaPos=48;}}
-verificar(); atualizar();
-}
-function verificar(){
-if(g1>=3){jogando=false;document.getElementById('msg').innerText="🏆 SCORPION VENCEU! FINISH HIM!";falar("Scorpion venceu! Finish Him!");alert("SCORPION VENCEU! 🔥🏆");}
-if(g2>=3){jogando=false;document.getElementById('msg').innerText="🏆 SUB-ZERO VENCEU! FINISH HIM!";falar("Sub Zero venceu! Finish Him!");alert("SUB-ZERO VENCEU! ❄️🏆");}
-}
-function compartilhar(){window.open("https://wa.me/?text="+encodeURIComponent("Joga MORTAL GOL Scorpion vs Sub Zero comigo! 🔥❄️ "+window.location.href),"_blank");}
-atualizar();
-</script>
-</body>
-</html>
+<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>MORTAL GOL OAB</title>
+<style>body{background:#0a0a0a;color:#fff;text-align:center;font-family:Arial;padding:20px}h1{color:#ffcc00;font-size:32px}a{display:block;background:#1a1a1a;border:2px solid #ffcc00;color:#fff;text-decoration:none;padding:15px;margin:10px auto;max-width:400px;border-radius:12px;font-weight:bold;font-size:18px}a:hover{background:#ffcc00;color:#000}</style></head>
+<body><h1>⚖️ MORTAL GOL OAB</h1><p>Escolha o exame que você quer treinar - Exames 36 ao 45</p>
+<a href="exame36.html">📚 EXAME 36</a>
+<a href="exame37.html">📚 EXAME 37</a>
+<a href="exame38.html">📚 EXAME 38</a>
+<a href="exame39.html">📚 EXAME 39 - EM BREVE</a>
+<a href="exame40.html">📚 EXAME 40 - EM BREVE</a>
+<a href="exame41.html">📚 EXAME 41 - EM BREVE</a>
+<a href="exame42.html">📚 EXAME 42 - EM BREVE</a>
+<a href="exame43.html">📚 EXAME 43 - EM BREVE</a>
+<a href="exame44.html">📚 EXAME 44 - EM BREVE</a>
+<a href="exame45.html">📚 EXAME 45 - EM BREVE</a>
+<p style="font-size:11px;color:#aaa">Jogo de estudos sem vínculo oficial com OAB/FGV</p></body></html>
