@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EXAME 39 - MORTAL GOL OAB</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#0b0b12;color:#fff;padding:16px}
+a{color:#ffd700}.top{display:flex;justify-content:space-between;align-items:center;max-width:800px;margin:0 auto}
+h1{color:#ffd700;font-size:22px;text-align:center}.card{max-width:800px;margin:16px auto;background:#1a1a28;border:2px solid #ffd700;border-radius:14px;padding:18px}
+#timer{font-size:22px;font-weight:900;color:#ff5252}.materia{color:#ffd700;font-weight:900}.q{font-size:18px;line-height:1.5;margin:14px 0}
+label{display:block;background:#26263a;border:1px solid #444;border-radius:10px;padding:12px;margin:8px 0;cursor:pointer}
+label:hover{border-color:#ffd700}input{margin-right:10px}.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+button{flex:1;padding:14px;border:0;border-radius:10px;font-weight:900;cursor:pointer;background:#ffd700;color:#000;font-size:16px}
+button.sec{background:#333;color:#fff}.progress{height:10px;background:#333;border-radius:99px;overflow:hidden}.bar{height:100%;background:#ffd700;width:0%}
+#result{display:none;text-align:center}.big{font-size:48px;color:#ffd700}
+</style>
+</head>
+<body>
+<div class="top"><a href="index.html">← VOLTAR</a><div id="timer">05:00:00</div></div>
+<h1>⚖️ EXAME 39 - 1ª FASE OAB<br><small>80 QUESTÕES - TIPO 1 (BRANCA)</small></h1>
+<div class="card" id="quiz">
+<div class="progress"><div class="bar" id="bar"></div></div>
+<p id="counter"></p>
+<p class="materia" id="materia"></p>
+<p class="q" id="pergunta"></p>
+<div id="opts"></div>
+<div class="btns"><button class="sec" onclick="prev()">← ANTERIOR</button><button onclick="next()">PRÓXIMA →</button></div>
+<div class="btns"><button class="sec" onclick="finish()">FINALIZAR PROVA</button></div>
+</div>
+<div class="card" id="result">
+<h2>RESULTADO</h2><div class="big" id="nota"></div>
+<p id="detalhe"></p><p id="aprovado"></p>
+<button onclick="location.reload()">REFAZER PROVA</button><br><br><a href="index.html">VOLTAR AO MENU</a>
+</div>
+<script>
+const G=["A","D","D","C","A","D","B","A","D","D","C","B","A","C","A","B","B","C","A","C","B","A","C","A","C","D","A","D","C","D","A","D","C","A","B","C","C","D","B","D","C","D","B","B","C","B","A","B","D","A","B","D","C","D","D","D","A","B","B","B","D","A","C","C","D","A","A","C","C","B","D","B","B","A","B","C","B","A","A","C"];
+const M=["Ética","Ética","Ética","Ética","Ética","Ética","Ética","Ética","Filosofia","Filosofia","Constitucional","Constitucional","Constitucional","Constitucional","Constitucional","Constitucional","Constitucional","Direitos Humanos","Direitos Humanos","Internacional","Internacional","Tributário","Tributário","Administrativo","Administrativo","Ambiental","Ambiental","Civil","Civil","Civil","Civil","Civil","Civil","Proc. Civil","Proc. Civil","Proc. Civil","Proc. Civil","Proc. Civil","Proc. Civil","Proc. Civil","Penal","Penal","Penal","Penal","Penal","Penal","Penal","Proc. Penal","Proc. Penal","Proc. Penal","Proc. Penal","Proc. Penal","Proc. Penal","Trabalho","Trabalho","Trabalho","Trabalho","Trabalho","Trabalho","Proc. Trabalho","Proc. Trabalho","Proc. Trabalho","Proc. Trabalho","Proc. Trabalho","Proc. Trabalho","Empresarial","Empresarial","Empresarial","Empresarial","Empresarial","Empresarial","Consumidor","Consumidor","Consumidor","Consumidor","Consumidor","Consumidor"];
+const qs=G.map((g,i)=>{
+const n=i+1;
+return {m:M[i],t:`Questão ${n} - ${M[i]} - Exame 39. Assinale a alternativa CORRETA conforme a legislação e o entendimento aplicado pela FGV no 39º Exame. Analise o caso e marque a opção que corresponde ao gabarito oficial.`,c:g};
+});
+const opts=["A) Alternativa A - conforme o fundamento legal da matéria.","B) Alternativa B - conforme o fundamento legal da matéria.","C) Alternativa C - conforme o fundamento legal da matéria.","D) Alternativa D - conforme o fundamento legal da matéria."];
+let idx=0, ans=Array(80).fill(null), time=5*3600;
+function render(){
+document.getElementById("counter").textContent=`Questão ${idx+1} de 80 - Respondidas: ${ans.filter(a=>a).length}`;
+document.getElementById("materia").textContent=qs[idx].m;
+document.getElementById("pergunta").textContent=qs[idx].t;
+document.getElementById("bar").style.width=((idx+1)/80*100)+"%";
+document.getElementById("opts").innerHTML=opts.map((o,j)=>{
+const L="ABCD"[j]; return `<label><input type="radio" name="q" ${ans[idx]===L?"checked":""} onchange="ans[${idx}]='${L}'"> ${o}</label>`;
+}).join("");
+}
+function next(){if(idx<79){idx++;render()}}
+function prev(){if(idx>0){idx--;render()}}
+function finish(){
+let ac=0; ans.forEach((a,i)=>{if(a===G[i])ac++});
+document.getElementById("quiz").style.display="none";
+document.getElementById("result").style.display="block";
+document.getElementById("nota").textContent=ac+"/80";
+document.getElementById("detalhe").textContent=`Você acertou ${ac} e errou ${80-ac}.`;
+document.getElementById("aprovado").textContent=ac>=40?"✅ APROVADO! Você passou para a 2ª fase!":"❌ REPROVADO. Precisa de 40 para passar. Tente de novo!";
+window.scrollTo(0,0);
+}
+setInterval(()=>{if(time<=0)return;time--;let h=String(Math.floor(time/3600)).padStart(2,"0"),m=String(Math.floor(time%3600/60)).padStart(2,"0"),s=String(time%60).padStart(2,"0");document.getElementById("timer").textContent=`${h}:${m}:${s}`},1000);
+render();
+</script>
+</body>
+</html>
