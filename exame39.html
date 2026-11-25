@@ -1,91 +1,20 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EXAME 39 - MORTAL GOL OAB</title>
-<style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#0b0b12;color:#fff;padding:16px}
-a{color:#ffd700}.top{display:flex;justify-content:space-between;align-items:center;max-width:800px;margin:0 auto}
-h1{color:#ffd700;font-size:22px;text-align:center}.card{max-width:800px;margin:16px auto;background:#1a1a28;border:2px solid #ffd700;border-radius:14px;padding:18px}
-#timer{font-size:22px;font-weight:900;color:#ff5252}.materia{color:#ffd700;font-weight:900}.q{font-size:18px;line-height:1.5;margin:14px 0}
-label{display:block;background:#26263a;border:1px solid #444;border-radius:10px;padding:12px;margin:8px 0;cursor:pointer}
-label:hover{border-color:#ffd700}input{margin-right:10px}.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
-button{flex:1;padding:14px;border:0;border-radius:10px;font-weight:900;cursor:pointer;background:#ffd700;color:#000;font-size:16px}
-button.sec{background:#333;color:#fff}.progress{height:10px;background:#333;border-radius:99px;overflow:hidden}.bar{height:100%;background:#ffd700;width:0%}
-#result{display:none;text-align:center}.big{font-size:48px;color:#ffd700}
-</style>
-</head>
-<body>
-<div class="top"><a href="index.html">← VOLTAR</a><div id="timer">05:00:00</div></div>
-<h1>⚖️ EXAME 39 - 1ª FASE OAB<br><small>80 QUESTÕES - TIPO 1 (BRANCA)</small></h1>
-<div class="card" id="quiz">
-<div class="progress"><div class="bar" id="bar"></div></div>
-<p id="counter"></p>
-<p class="materia" id="materia"></p>
-<p class="q" id="pergunta"></p>
-<div id="opts"></div>
-<div class="btns"><button class="sec" onclick="prev()">← ANTERIOR</button><button onclick="next()">PRÓXIMA →</button></div>
-<div class="btns"><button class="sec" onclick="finish()">FINALIZAR PROVA</button></div>
-</div>
-<div class="card" id="result">
-<h2>RESULTADO</h2><div class="big" id="nota"></div>
-<p id="detalhe"></p><p id="aprovado"></p>
-<button onclick="location.reload()">REFAZER PROVA</button><br><br><a href="index.html">VOLTAR AO MENU</a>
-</div>
-<script>
-const G=["A","D","D","C","A","D","B","A","D","D","C","B","A","C","A","B","B","C","A","C","B","A","C","A","C","D","A","D","C","D","A","D","C","A","B","C","C","D","B","D","C","D","B","B","C","B","A","B","D","A","B","D","C","D","D","D","A","B","B","B","D","A","C","C","D","A","A","C","C","B","D","B","B","A","B","C","B","A","A","C"];
-const M=["Ética","Ética","Ética","Ética","Ética","Ética","Ética","Ética","Filosofia","Filosofia","Constitucional","Constitucional","Constitucional","Constitucional","Constitucional","Constitucional","Constitucional","Direitos Humanos","Direitos Humanos","Internacional","Internacional","Tributário","Tributário","Administrativo","Administrativo","Ambiental","Ambiental","Civil","Civil","Civil","Civil","Civil","Civil","Proc. Civil","Proc. Civil","Proc. Civil","Proc. Civil","Proc. Civil","Proc. Civil","Proc. Civil","Penal","Penal","Penal","Penal","Penal","Penal","Penal","Proc. Penal","Proc. Penal","Proc. Penal","Proc. Penal","Proc. Penal","Proc. Penal","Trabalho","Trabalho","Trabalho","Trabalho","Trabalho","Trabalho","Proc. Trabalho","Proc. Trabalho","Proc. Trabalho","Proc. Trabalho","Proc. Trabalho","Proc. Trabalho","Empresarial","Empresarial","Empresarial","Empresarial","Empresarial","Empresarial","Consumidor","Consumidor","Consumidor","Consumidor","Consumidor","Consumidor"];
-const TEXTOS={
-1:{q:"João, advogado, firmou contrato de associação com uma sociedade de advogados, sem vínculo de emprego, para prestar serviços advocatícios. Sobre esse contrato, assinale a correta:",a:"A) Deve indicar a forma de partilha dos honorários e a responsabilidade das partes, sem configurar vínculo empregatício.",b:"B) Gera automaticamente vínculo de emprego com a sociedade.",c:"C) É proibido pelo Estatuto da OAB.",d:"D) Só é válido se registrado na Justiça do Trabalho."},
-2:{q:"Maria, advogada, atuou como defensora de um réu em processo criminal. Depois, é procurada pela polícia para colaborar em investigação contra esse ex-cliente, oferecendo informações sigilosas que obteve no exercício da advocacia. Sobre o sigilo profissional, assinale a correta:",a:"A) Maria pode revelar o segredo, pois o interesse público prevalece sempre.",b:"B) Maria pode revelar, se receber autorização do juiz.",c:"C) Maria pode revelar, se o cliente já foi condenado.",d:"D) Maria deve manter o sigilo, pois é dever profissional, salvo grave ameaça ao direito à vida e à honra, com autorização do cliente."},
-3:{q:"Um advogado foi ofendido publicamente por um magistrado durante audiência, em razão do exercício profissional. O Conselho Seccional decide promover o desagravo público. Sobre o desagravo, assinale a correta:",a:"A) O desagravo depende de condenação criminal do ofensor.",b:"B) O desagravo só pode ser feito em sessão secreta.",c:"C) O desagravo só cabe se o advogado representar contra o ofensor.",d:"D) O desagravo é público, promovido pelo Conselho, para reafirmar as prerrogativas da advocacia."},
-4:{q:"Um escritório de advocacia quer fazer publicidade nas redes sociais. Segundo o Código de Ética e Disciplina da OAB e o Provimento 205/2021, assinale a correta:",a:"A) Pode prometer resultados e usar linguagem mercantilista.",b:"B) Pode fazer publicidade comparativa com outros escritórios.",c:"C) Pode fazer publicidade informativa, sóbria, sem mercantilização, sem promessa de resultados e sem ostentação.",d:"D) Não pode fazer nenhuma publicidade em redes sociais."},
-5:{q:"Pedro, advogado, atuou em causa própria e obteve êxito. Ele quer cobrar honorários de sucumbência da parte contrária. Sobre honorários, assinale a correta:",a:"A) O advogado que atua em causa própria tem direito a honorários de sucumbência, como se fosse terceiro.",b:"B) O advogado em causa própria nunca tem direito a honorários.",c:"C) Só tem direito se for empregado da parte.",d:"D) Só tem direito se houver contrato escrito com a outra parte."},
-6:{q:"Carlos, advogado, é nomeado para cargo público incompatível com a advocacia, mas continua advogando normalmente. Sobre a inscrição na OAB, assinale a correta:",a:"A) Nada acontece, ele pode acumular.",b:"B) Sua inscrição fica apenas suspensa por 30 dias.",c:"C) Ele só precisa pagar anuidade em dobro.",d:"D) Sua inscrição deve ser cancelada, pois o exercício de cargo incompatível impede a advocacia."},
-7:{q:"Uma sociedade de advogados quer contratar um estagiário de Direito. Sobre o estágio, assinale a correta:",a:"A) O estágio pode ser feito por qualquer pessoa, mesmo sem estar na faculdade.",b:"B) O estágio é permitido ao acadêmico de Direito, com inscrição na OAB como estagiário, e deve respeitar as atividades próprias e a supervisão.",c:"C) O estagiário pode assinar petições sozinho, como advogado.",d:"D) O estágio dispensa inscrição na OAB."},
-8:{q:"Dois advogados querem constituir uma sociedade unipessoal de advocacia. Sobre essa sociedade, assinale a correta:",a:"A) É permitida, constituída por um só advogado, com registro na OAB, e o advogado não pode integrar outra sociedade.",b:"B) É proibida, toda sociedade precisa de 2 sócios.",c:"C) É permitida, mas o sócio pode integrar outras 5 sociedades.",d:"D) É permitida, mas dispensa registro na OAB."},
-9:{q:"Sobre a teoria do direito e a norma jurídica, segundo a visão positivista de Hans Kelsen, assinale a correta:",a:"A) A validade da norma depende apenas de sua justiça moral.",b:"B) A norma só é válida se for aceita por todos.",c:"C) A norma é válida se for eficaz socialmente, mesmo sem autoridade.",d:"D) A validade da norma decorre de uma norma superior, até chegar à norma fundamental pressuposta."},
-10:{q:"Sobre a teoria da justiça de John Rawls, o conceito de 'véu da ignorância' significa:",a:"A) Que o juiz deve ignorar a lei.",b:"B) Que as partes devem decidir sem saber seus interesses pessoais, para escolher princípios justos.",c:"C) Que a justiça é apenas vingança.",d:"D) Que a justiça deve favorecer sempre os ricos."},
-11:{q:"A Constituição prevê que a casa é asilo inviolável do indivíduo. Sobre essa garantia, assinale a correta:",a:"A) A casa pode ser invadida a qualquer hora por ordem do síndico.",b:"B) A casa pode ser invadida a qualquer hora pela polícia, sem ordem.",c:"C) Ninguém pode penetrar na casa sem consentimento do morador, salvo em flagrante delito, desastre, para prestar socorro, ou por ordem judicial durante o dia.",d:"D) A casa pode ser invadida à noite com ordem judicial."},
-12:{q:"Sobre o mandado de segurança, assinale a correta:",a:"A) Cabe contra qualquer ato, mesmo sem direito líquido e certo.",b:"B) Cabe para proteger direito líquido e certo, não amparado por habeas corpus ou habeas data, quando o responsável for autoridade pública.",c:"C) Cabe para discutir crime.",d:"D) Cabe para cobrar dívida de dinheiro."},
-13:{q:"Sobre a repartição de competências na Constituição, assinale a correta:",a:"A) Compete privativamente à União legislar sobre direito civil, comercial, penal e processual.",b:"B) Compete aos Municípios legislar sobre direito penal.",c:"C) Compete aos Estados legislar sobre nacionalidade.",d:"D) Compete à União legislar sobre horário de funcionamento do comércio local."},
-14:{q:"Uma lei estadual contraria a Constituição Federal. Sobre o controle concentrado de constitucionalidade, assinale a correta:",a:"A) Qualquer cidadão pode propor ADI.",b:"B) Qualquer juiz de 1º grau pode declarar inconstitucionalidade com efeito erga omnes.",c:"C) A ADI pode ser proposta pelos legitimados do art. 103 da CF, como Presidente, Governador, PGR, OAB e partido político com representação no Congresso.",d:"D) A ADI só pode ser proposta pelo STF."},
-15:{q:"Sobre os direitos e garantias fundamentais, assinale a correta:",a:"A) São garantias como o habeas corpus, mandado de segurança, habeas data e mandado de injunção, para proteger direitos contra abuso do Estado.",b:"B) Não podem ser invocados contra o Estado.",c:"C) Só valem para brasileiros natos.",d:"D) Podem ser suspensos a qualquer momento pelo Presidente."},
-16:{q:"Sobre o controle difuso de constitucionalidade no Brasil, assinale a correta:",a:"A) Só o STF pode fazer.",b:"B) Qualquer juiz ou tribunal pode, no caso concreto, deixar de aplicar lei que entenda inconstitucional, com efeito entre as partes.",c:"C) É proibido no Brasil.",d:"D) Só vale para leis municipais."},
-17:{q:"Sobre os objetivos fundamentais da República Federativa do Brasil, assinale a correta:",a:"A) Criar privilégios para uma região.",b:"B) Construir uma sociedade livre, justa e solidária, erradicar a pobreza, reduzir desigualdades e promover o bem de todos, sem preconceitos.",c:"C) Aumentar impostos.",d:"D) Fechar o Congresso."},
-18:{q:"Sobre os tratados internacionais de direitos humanos, após a EC 45/2004, assinale a correta: (Questão anulada no gabarito definitivo - conta como acerto)",a:"A) Nunca têm status constitucional.",b:"B) São sempre leis ordinárias.",c:"C) Se aprovados em dois turnos, por 3/5 dos votos em cada Casa, equivalem a emendas constitucionais.",d:"D) Não valem no Brasil."},
-19:{q:"Sobre a Corte Interamericana de Direitos Humanos, assinale a correta:",a:"A) Pode condenar o Estado brasileiro por violação de direitos previstos na Convenção Americana, com obrigação de reparar.",b:"B) Só julga crimes comuns.",c:"C) Não tem jurisdição sobre o Brasil.",d:"D) Só julga países europeus."},
-20:{q:"Sobre nacionalidade brasileira, assinale a correta:",a:"A) Apenas quem nasce de pais brasileiros é brasileiro.",b:"B) Apenas estrangeiro naturalizado é brasileiro.",c:"C) São brasileiros natos os nascidos no Brasil, ainda que de pais estrangeiros, desde que estes não estejam a serviço de seu país.",d:"D) Apenas quem mora 10 anos no Brasil é brasileiro."}
-};
-const qs=G.map((g,i)=>{
-const n=i+1;
-if(TEXTOS[n]) return {m:M[i],t:TEXTOS[n].q,opts:[TEXTOS[n].a,TEXTOS[n].b,TEXTOS[n].c,TEXTOS[n].d],c:g};
-return {m:M[i],t:`Questão ${n} - ${M[i]} - Exame 39. Assinale a alternativa CORRETA conforme a legislação e o entendimento aplicado pela FGV no 39º Exame.`,opts:["A) Alternativa A - conforme o fundamento legal da matéria.","B) Alternativa B - conforme o fundamento legal da matéria.","C) Alternativa C - conforme o fundamento legal da matéria.","D) Alternativa D - conforme o fundamento legal da matéria."],c:g};
-});
-let idx=0, ans=Array(80).fill(null), time=5*3600;
-function render(){
-document.getElementById("counter").textContent=`Questão ${idx+1} de 80 - Respondidas: ${ans.filter(a=>a).length}`;
-document.getElementById("materia").textContent=qs[idx].m;
-document.getElementById("pergunta").textContent=qs[idx].t;
-document.getElementById("bar").style.width=((idx+1)/80*100)+"%";
-document.getElementById("opts").innerHTML=qs[idx].opts.map((o,j)=>{
-const L="ABCD"[j]; return `<label><input type="radio" name="q" ${ans[idx]===L?"checked":""} onchange="ans[${idx}]='${L}'"> ${o}</label>`;
-}).join("");
-}
-function next(){if(idx<79){idx++;render()}}
-function prev(){if(idx>0){idx--;render()}}
-function finish(){
-let ac=0; ans.forEach((a,i)=>{if(a===G[i])ac++});
-document.getElementById("quiz").style.display="none";
-document.getElementById("result").style.display="block";
-document.getElementById("nota").textContent=ac+"/80";
-document.getElementById("detalhe").textContent=`Você acertou ${ac} e errou ${80-ac}.`;
-document.getElementById("aprovado").textContent=ac>=40?"✅ APROVADO! Você passou para a 2ª fase!":"❌ REPROVADO. Precisa de 40 para passar. Tente de novo!";
-window.scrollTo(0,0);
-}
-setInterval(()=>{if(time<=0)return;time--;let h=String(Math.floor(time/3600)).padStart(2,"0"),m=String(Math.floor(time%3600/60)).padStart(2,"0"),s=String(time%60).padStart(2,"0");document.getElementById("timer").textContent=`${h}:${m}:${s}`},1000);
-render();
-</script>
-</body>
-</html>
+41:{q:"Sobre os direitos fundamentais previstos na CF/88, assinale a correta.",a:"A) A casa é asilo inviolável, nela ninguém podendo penetrar sem consentimento do morador, salvo em caso de flagrante delito ou desastre, ou para prestar socorro, ou, durante o dia, por determinação judicial.",b:"B) É livre a manifestação do pensamento, sendo permitido o anonimato.",c:"C) A prática do racismo constitui crime afiançável e prescritível.",d:"D) Ninguém será considerado culpado até o trânsito em julgado de sentença penal condenatória, salvo nos crimes hediondos."},
+42:{q:"Sobre a nacionalidade na CF/88, assinale a correta.",a:"A) São brasileiros natos os nascidos no estrangeiro de pai brasileiro ou mãe brasileira, desde que qualquer deles esteja a serviço do Brasil.",b:"B) São brasileiros naturalizados os estrangeiros de qualquer nacionalidade residentes no Brasil há mais de 10 anos ininterruptos e sem condenação penal.",c:"C) O brasileiro nato nunca perderá a nacionalidade.",d:"D) A lei não poderá estabelecer distinção entre brasileiros natos e naturalizados, salvo nos casos previstos na Constituição."},
+43:{q:"Sobre o Poder Legislativo, assinale a correta.",a:"A) A Câmara dos Deputados compõe-se de representantes do povo, eleitos pelo sistema proporcional, em cada Estado, em cada Território e no Distrito Federal.",b:"B) O Senado Federal compõe-se de representantes dos Estados e do Distrito Federal, eleitos segundo o princípio majoritário.",c:"C) Cada Estado e o Distrito Federal elegerão três Senadores, com mandato de oito anos.",d:"D) Todas as alternativas estão corretas."},
+44:{q:"Sobre o controle de constitucionalidade, assinale a correta.",a:"A) O controle difuso é exercido por qualquer juiz ou tribunal no caso concreto.",b:"B) O controle concentrado é exercido exclusivamente pelo STF, por meio da ADI, ADC e ADPF.",c:"C) Na ADI, a decisão tem efeitos erga omnes e ex tunc, em regra.",d:"D) Todas as alternativas estão corretas."},
+45:{q:"Sobre os atos administrativos, assinale a correta.",a:"A) A revogação é a extinção do ato por vício de legalidade.",b:"B) A anulação é a extinção do ato por conveniência e oportunidade.",c:"C) A revogação pode ser feita pela própria Administração, por motivos de conveniência e oportunidade, respeitados os direitos adquiridos.",d:"D) O ato discricionário não admite controle judicial."},
+46:{q:"Sobre licitação e contratos administrativos (Lei 14.133/21), assinale a correta.",a:"A) A licitação é dispensável em todos os casos de emergência.",b:"B) São modalidades de licitação: pregão, concorrência, concurso, leilão e diálogo competitivo.",c:"C) O pregão é obrigatório para aquisição de bens e serviços comuns.",d:"D) As alternativas B e C estão corretas."},
+47:{q:"Sobre responsabilidade civil do Estado, assinale a correta.",a:"A) A responsabilidade do Estado por atos comissivos é objetiva, baseada na teoria do risco administrativo.",b:"B) A responsabilidade por omissão é sempre subjetiva, exigindo comprovação de culpa.",c:"C) O Estado responde pelos danos que seus agentes causarem a terceiros, assegurado o direito de regresso contra o responsável nos casos de dolo ou culpa.",d:"D) Todas as alternativas estão corretas."},
+48:{q:"Sobre os contratos no Código Civil, assinale a correta.",a:"A) A proposta de contrato obriga o proponente, se o contrário não resultar dos termos dela, da natureza do negócio ou das circunstâncias do caso.",b:"B) O contrato de adesão não admite interpretação favorável ao aderente.",c:"C) A liberdade de contratar é absoluta, sem limites.",d:"D) O contrato só se aperfeiçoa com a entrega da coisa."},
+49:{q:"Sobre a posse no Código Civil, assinale a correta.",a:"A) Considera-se possuidor todo aquele que tem de fato o exercício, pleno ou não, de algum dos poderes inerentes à propriedade.",b:"B) A posse direta anula a posse indireta.",c:"C) O possuidor de má-fé tem direito aos frutos colhidos.",d:"D) A posse não pode ser transmitida aos herdeiros."},
+50:{q:"Sobre usucapião, assinale a correta.",a:"A) A usucapião extraordinária exige 15 anos de posse mansa, pacífica e ininterrupta, independentemente de justo título e boa-fé.",b:"B) A usucapião ordinária exige 10 anos, com justo título e boa-fé.",c:"C) O prazo da usucapião extraordinária pode ser reduzido para 10 anos se o possuidor houver estabelecido no imóvel sua moradia habitual ou realizado obras de caráter produtivo.",d:"D) Todas as alternativas estão corretas."},
+51:{q:"Sobre o casamento no Código Civil, assinale a correta.",a:"A) O casamento é civil e gratuita a sua celebração.",b:"B) A idade mínima para casar é 18 anos, sem exceções.",c:"C) O casamento religioso não tem efeito civil.",d:"D) É proibido o casamento entre ascendentes e descendentes, apenas na linha reta."},
+52:{q:"Sobre o poder familiar, assinale a correta.",a:"A) O poder familiar será exercido em igualdade de condições pelo pai e pela mãe.",b:"B) A falta ou impedimento de um dos pais transfere o exercício exclusivo ao outro.",c:"C) O filho menor pode ser colocado em família substituta apenas por decisão judicial.",d:"D) Todas as alternativas estão corretas."},
+53:{q:"Sobre a sucessão legítima, assinale a correta.",a:"A) A sucessão legítima defere-se na ordem: descendentes, ascendentes, cônjuge sobrevivente, colaterais.",b:"B) Havendo descendentes, o cônjuge sobrevivente concorre com eles, salvo no regime da comunhão universal.",c:"C) Os herdeiros necessários são os descendentes, ascendentes e o cônjuge.",d:"D) Todas as alternativas estão corretas."},
+54:{q:"Sobre o crime de furto (art. 155, CP), assinale a correta.",a:"A) Subtrair, para si ou para outrem, coisa alheia móvel.",b:"B) A pena é aumentada se o crime é praticado durante o repouso noturno.",c:"C) Se o criminoso é primário e a coisa é de pequeno valor, o juiz pode substituir a pena de reclusão por detenção, diminuí-la de um a dois terços, ou aplicar somente pena de multa.",d:"D) Todas as alternativas estão corretas."},
+55:{q:"Sobre o crime de roubo (art. 157, CP), assinale a correta.",a:"A) Subtrair coisa móvel alheia, para si ou para outrem, mediante grave ameaça ou violência à pessoa, ou depois de havê-la, por qualquer meio, reduzido à impossibilidade de resistência.",b:"B) A pena é aumentada se a violência resulta em lesão corporal grave.",c:"C) Se resulta morte, a pena é de reclusão de 20 a 30 anos.",d:"D) Todas as alternativas estão corretas."},
+56:{q:"Sobre a legítima defesa, assinale a correta.",a:"A) Entende-se em legítima defesa quem, usando moderadamente dos meios necessários, repele injusta agressão, atual ou iminente, a direito seu ou de outrem.",b:"B) A legítima defesa não se aplica para defender patrimônio.",c:"C) O excesso doloso na legítima defesa é impunível.",d:"D) A legítima defesa putativa não exclui a ilicitude."},
+57:{q:"Sobre o Tribunal do Júri, assinale a correta.",a:"A) Compete ao Tribunal do Júri julgar os crimes dolosos contra a vida.",b:"B) São princípios do Júri: plenitude de defesa, sigilo das votações, soberania dos veredictos e competência mínima.",c:"C) O Júri é composto por 7 jurados sorteados.",d:"D) Todas as alternativas estão corretas, exceto a B."},
+58:{q:"Sobre a prescrição penal, assinale a correta.",a:"A) A prescrição é a perda do direito de punir do Estado pelo decurso do tempo.",b:"B) A prescrição da pretensão punitiva ocorre antes do trânsito em julgado.",c:"C) A prescrição da pretensão executória ocorre após o trânsito em julgado.",d:"D) Todas as alternativas estão corretas."},
+59:{q:"Sobre o Direito do Trabalho, assinale a correta.",a:"A) Considera-se empregado toda pessoa física que prestar serviços de natureza não eventual a empregador, sob a dependência deste e mediante salário.",b:"B) A jornada normal de trabalho é de 8 horas diárias e 44 semanais.",c:"C) O contrato de trabalho por prazo determinado não pode ser estipulado por mais de 2 anos.",d:"D) Todas as alternativas estão corretas."},
+60:{q:"Sobre o aviso prévio, assinale a correta.",a:"A) O aviso prévio proporcional ao tempo de serviço é de no mínimo 30 dias, acrescidos de 3 dias por ano de serviço prestado na mesma empresa, até o máximo de 60 dias, totalizando até 90 dias.",b:"B) A falta de aviso prévio por parte do empregador dá ao empregado o direito aos salários correspondentes.",c:"C) O aviso prévio trabalhado tem redução de 2 horas diárias ou 7 dias corridos.",d:"D) Todas as alternativas estão corretas."},
