@@ -14,12 +14,14 @@ h1{font-size:20px;color:#1a3a5a;text-align:center}
 .opt.sel{background:#dbeafe;border-color:#2563eb}
 button{background:#1a3a5a;color:#fff;border:0;padding:12px 20px;border-radius:8px;width:100%;font-size:16px;margin-top:10px;cursor:pointer}
 .bar{height:8px;background:#ddd;border-radius:99px;overflow:hidden;margin:10px 0}.bar div{height:100%;background:#22c55e;width:0%}
+.jump{display:flex;gap:8px;margin:10px 0}.jump input{flex:1;padding:10px;border:1px solid #ccc;border-radius:8px}.jump button{width:auto;padding:10px 16px;margin:0}
 </style>
 </head>
 <body>
 <div class="card">
 <div class="top"><span>Exame 39 - Simulado OAB</span><span id="placar">Acertos: 0</span></div>
 <h1>Simulado Estilo FGV - Interpretação</h1>
+<div class="jump"><input id="irInput" type="number" min="1" max="80" placeholder="Ir para questão (1-80)"><button onclick="irPara()">Ir ➜</button></div>
 <div class="bar"><div id="prog"></div></div>
 <p id="num"></p>
 <div class="caso" id="caso"></div>
@@ -110,9 +112,12 @@ const Q=[
 {t:"Um empresário sonegou impostos por 5 anos, omitindo receitas. A Receita descobriu e cobrou multa.",q:"A conduta:",o:["É apenas erro.","Configura crime tributário e infração administrativa, podendo gerar multa e processo penal.","É permitida se ele pagar depois.","É apenas dívida."],a:1},
 {t:"Uma gestante foi demitida e a empresa alega que não sabia da gravidez.",q:"A estabilidade:",o:["Depende do conhecimento do empregador.","Independe do conhecimento do empregador, bastando a gravidez na data da dispensa.","Não existe.","Depende de aviso prévio."],a:1}
 ];
-let idx=0, acertos=0, sel=-1;
+let p = new URLSearchParams(location.search);
+let idx = p.get('q') ? parseInt(p.get('q'))-1 : 0;
+let acertos=0, sel=-1;
 function mostra(){ const q=Q[idx]; document.getElementById('num').innerText=`Questão ${idx+1} de 80`; document.getElementById('caso').innerText=q.t+"\n\n"+q.q; document.getElementById('prog').style.width=((idx)/80*100)+'%'; document.getElementById('placar').innerText=`Acertos: ${acertos}`; document.getElementById('res').innerText=''; sel=-1; document.getElementById('opts').innerHTML=q.o.map((o,i)=>`<div class="opt" onclick="escolher(${i},this)">${String.fromCharCode(65+i)}) ${o}</div>`).join('');}
 function escolher(i,el){ sel=i; document.querySelectorAll('.opt').forEach(e=>e.classList.remove('sel')); el.classList.add('sel');}
+function irPara(){ let n=parseInt(document.getElementById('irInput').value); if(n>=1 && n<=80){ idx=n-1; mostra(); } else alert('Digite de 1 a 80'); }
 function proxima(){ if(sel==-1){alert('Escolha uma alternativa!');return;} if(sel==Q[idx].a){acertos++; document.getElementById('res').innerText='✅ Correta!';} else {document.getElementById('res').innerText='❌ Errada! Correta: '+String.fromCharCode(65+Q[idx].a);} setTimeout(()=>{ idx++; if(idx>=Q.length){alert(`Fim! Você acertou ${acertos} de 80`); idx=0; acertos=0;} mostra(); },900); }
 mostra();
 </script>
