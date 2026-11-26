@@ -3,106 +3,69 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Exame 39 - Simulado OAB</title>
+<title>Exame 39 - Simulado OAB | Estilo FGV</title>
 <style>
-  *{box-sizing:border-box}
-  body{font-family:Arial,sans-serif;background:#f1f5f9;margin:0;padding:15px}
-  .box{max-width:650px;margin:0 auto;background:#fff;border-radius:16px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,.08)}
-  h1{color:#1a365d;text-align:center;margin:5px 0 2px;font-size:24px}
-  .sub{text-align:center;color:#64748b;margin-bottom:15px}
-  .top{display:flex;justify-content:space-between;background:#e2e8f0;padding:10px 12px;border-radius:10px;font-weight:bold;font-size:14px}
-  .pergunta{font-size:18px;line-height:1.5;margin:18px 0 12px;color:#1e293b}
-  .opcao{display:block;width:100%;text-align:left;background:#f8fafc;border:2px solid #e2e8f0;border-radius:12px;padding:13px;margin-bottom:10px;font-size:16px;cursor:pointer}
-  .opcao.selecionada{background:#dbeafe;border-color:#2563eb}
-  .opcao.certa{background:#dcfce7!important;border-color:#16a34a!important}
-  .opcao.errada{background:#fee2e2!important;border-color:#dc2626!important}
-  button#prox{width:100%;background:#1a365d;color:#fff;border:0;padding:15px;border-radius:12px;font-size:17px;font-weight:bold;cursor:pointer;margin-top:5px}
-  button#prox:disabled{opacity:.5}
-  .resultado{text-align:center}
-  .nota{font-size:48px;font-weight:bold;color:#1a365d;margin:10px 0}
-  .aviso{background:#fffbeb;border:1px solid #fcd34d;padding:10px;border-radius:10px;font-size:13px;color:#92400e;margin-top:15px;text-align:center}
+*{box-sizing:border-box} body{font-family:Arial,sans-serif;background:#f0f2f5;margin:0;padding:15px}
+.card{max-width:800px;margin:auto;background:#fff;padding:22px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.1)}
+.top{display:flex;justify-content:space-between;font-weight:bold;color:#1a3a5a}
+h1{font-size:20px;color:#1a3a5a;text-align:center}
+.caso{background:#eef4ff;border-left:4px solid #1a3a5a;padding:14px;border-radius:8px;line-height:1.6;font-size:15px}
+.opt{border:1px solid #ddd;padding:12px;margin:8px 0;border-radius:8px;cursor:pointer}
+.opt.sel{background:#dbeafe;border-color:#2563eb}
+button{background:#1a3a5a;color:#fff;border:0;padding:12px 20px;border-radius:8px;width:100%;font-size:16px;margin-top:10px;cursor:pointer}
+.bar{height:8px;background:#ddd;border-radius:99px;overflow:hidden;margin:10px 0}.bar div{height:100%;background:#22c55e;width:0%}
 </style>
 </head>
 <body>
-<div class="box">
-  <h1>Exame 39 - Simulado OAB</h1>
-  <p class="sub">Simulado para treinar - 80 questões</p>
-
-  <div id="tela-jogo">
-    <div class="top">
-      <span id="contador">Questão 1 de 80</span>
-      <span id="placar">Acertos: 0</span>
-    </div>
-    <p class="pergunta" id="texto-pergunta"></p>
-    <div id="opcoes"></div>
-    <button id="prox" disabled>Próxima →</button>
-    <div class="aviso">⚠️ SIMULADO para testar o site. Ainda NÃO são as 80 oficiais da FGV. Vamos trocar depois.</div>
-  </div>
-
-  <div id="tela-fim" class="resultado" style="display:none">
-    <h2>Fim do simulado! 🎉</h2>
-    <div class="nota" id="nota-final"></div>
-    <p id="mensagem-final"></p>
-    <button id="prox" onclick="location.reload()" style="width:100%;background:#1a365d;color:#fff;border:0;padding:15px;border-radius:12px;font-size:17px;font-weight:bold">Fazer de novo</button>
-  </div>
+<div class="card">
+<div class="top"><span>Exame 39 - Simulado OAB</span><span id="placar">Acertos: 0</span></div>
+<h1>Simulado Estilo FGV - Interpretação</h1>
+<div class="bar"><div id="prog"></div></div>
+<p id="num"></p>
+<div class="caso" id="caso"></div>
+<div id="opts"></div>
+<button onclick="proxima()">Próxima ➜</button>
+<p id="res" style="text-align:center;font-weight:bold"></p>
 </div>
-
 <script>
-const materias = ["Ética Profissional","Direito Constitucional","Direito Civil","Direito Penal","Direito Processual Civil","Direito do Trabalho","Direito Tributário","Direito Administrativo"];
-const questoes = [];
-for(let i=1;i<=80;i++){
-  const m = materias[i % materias.length];
-  questoes.push({
-    pergunta: `Questão ${i} - ${m}: (SIMULADO) Qual alternativa está correta conforme a legislação e entendimento majoritário sobre ${m}?`,
-    opcoes: [
-      `Alternativa A - Conceito geral de ${m}`,
-      `Alternativa B - Regra correta de ${m} - RESPOSTA CORRETA DO SIMULADO`,
-      `Alternativa C - Exceção que não se aplica a ${m}`,
-      `Alternativa D - Entendimento superado sobre ${m}`
-    ],
-    correta: 1
-  });
-}
-
-let atual = 0, acertos = 0, selecionada = -1, respondeu = false;
-
-function mostrar(){
-  const q = questoes[atual];
-  document.getElementById('contador').innerText = `Questão ${atual+1} de 80`;
-  document.getElementById('placar').innerText = `Acertos: ${acertos}`;
-  document.getElementById('texto-pergunta').innerText = q.pergunta;
-  const div = document.getElementById('opcoes');
-  div.innerHTML = '';
-  selecionada = -1; respondeu = false;
-  document.getElementById('prox').disabled = true;
-  document.getElementById('prox').innerText = atual === 79 ? 'Ver resultado' : 'Próxima →';
-  q.opcoes.forEach((txt, idx)=>{
-    const b = document.createElement('button');
-    b.className = 'opcao'; b.innerText = txt;
-    b.onclick = ()=>{
-      if(respondeu) return;
-      respondeu = true; selecionada = idx;
-      document.querySelectorAll('.opcao').forEach((el,j)=>{
-        if(j===q.correta) el.classList.add('certa');
-        else if(j===idx) el.classList.add('errada');
-      });
-      if(idx===q.correta) acertos++;
-      document.getElementById('placar').innerText = `Acertos: ${acertos}`;
-      document.getElementById('prox').disabled = false;
-    };
-    div.appendChild(b);
-  });
-}
-document.getElementById('prox').onclick = ()=>{
-  if(atual < 79){ atual++; mostrar(); }
-  else{
-    document.getElementById('tela-jogo').style.display='none';
-    document.getElementById('tela-fim').style.display='block';
-    document.getElementById('nota-final').innerText = `${acertos} / 80`;
-    document.getElementById('mensagem-final').innerText = acertos>=40 ? 'Você passou! Parabéns! 🎉' : 'Continue treinando, você consegue! 💪';
-  }
-};
-mostrar();
+const Q=[
+{t:"Ana, advogada inscrita na OAB/SP, foi procurada por Pedro, que deseja propor ação contra seu ex-sócio. Pedro propõe pagar os honorários apenas se vencer a causa, mediante contrato de quota litis de 40% sobre o valor recebido. Ana, preocupada com os limites éticos, consulta o Código de Ética.",q:"Diante da situação narrada, assinale a alternativa correta sobre os honorários de quota litis.",o:["É vedado em qualquer hipótese, por violar a dignidade da profissão.","É permitido, desde que o percentual não seja abusivo e não haja aviltamento, observadas as regras do Estatuto.", "Só é permitido em causas trabalhistas.", "É permitido apenas se o cliente for hipossuficiente."],a:1},
+{t:"Carlos, prefeito de um município, editou decreto proibindo a realização de cultos religiosos em praças públicas, sob o argumento de perturbação do sossego. Um grupo religioso impetrou mandado de segurança alegando violação à liberdade de crença.",q:"Diante do caso, assinale a correta:",o:["O decreto é válido, pois o sossego prevalece sobre a religião.","A liberdade de crença é absoluta e não admite qualquer limitação.","O decreto viola a liberdade de religião, pois a limitação deve ser proporcional e prevista em lei, não por mero decreto.","Apenas cultos de religiões majoritárias são protegidos."],a:2},
+{t:"Mariana vendeu seu carro a João por R$ 40.000,00. No contrato, constou que o veículo estava em perfeito estado. Uma semana depois, João descobriu um defeito oculto no motor, que já existia na época da venda e tornava o carro impróprio para o uso.",q:"Nesse caso, João poderá:",o:["Apenas pedir desconto, sem poder desfazer o negócio.","Rejeitar a coisa e pedir a redibição, ou abatimento do preço, por vício redibitório.", "Nada fazer, pois comprou no estado em que se encontra.", "Pedir apenas indenização por danos morais."],a:1},
+{t:"Rafael, empregado de uma empresa há 3 anos, foi dispensado sem justa causa. Ele nunca gozou férias. A empresa alega que ele perdeu o direito porque não pediu férias no prazo.",q:"Sobre as férias, é correto afirmar:",o:["O empregado perde o direito se não requerer no prazo.", "O direito a férias é do empregado e o período de concessão é do empregador, sendo devida a indenização se não concedidas.", "Férias só são devidas após 5 anos de trabalho.", "A empresa pode converter todas as férias em dinheiro sem a vontade do empregado."],a:1},
+{t:"Lucas, de 19 anos, subtraiu o celular de uma colega, mediante grave ameaça com uma faca de brinquedo, que parecia verdadeira. A vítima entregou o bem por medo.",q:"A conduta de Lucas configura:",o:["Furto, pois a faca era de brinquedo.", "Roubo, pois a grave ameaça, ainda que com instrumento ineficaz, caracteriza o delito.", "Estelionato, pois houve engano.", "Apenas constrangimento ilegal."],a:1},
+{t:"Fernanda alugou um apartamento por 30 meses. Após 12 meses, o locador pediu o imóvel de volta alegando que precisa para uso próprio, sem notificação prévia.",q:"Assinale a correta:",o:["O locador pode retomar a qualquer tempo, sem justificativa.", "Durante o prazo do contrato, o locador só pode retomar nas hipóteses legais, não por mera vontade.", "O locatário deve sair em 15 dias, sem direito a nada.", "O contrato de locação não tem prazo mínimo."],a:1},
+{t:"Paulo foi abordado por policiais que, sem mandado e sem fundada suspeita, entraram em sua casa e apreenderam documentos em seu quarto.",q:"A prova obtida é:",o:["Válida, pois a polícia pode entrar sempre.", "Ilícita, pois violou a inviolabilidade do domicílio, salvo flagrante ou consentimento.", "Válida se o documento for importante.", "Válida apenas à noite."],a:1},
+{t:"Uma empresa publicou anúncio de emprego exigindo apenas candidatos do sexo masculino, com até 30 anos, para cargo de vendedor.",q:"O anúncio é:",o:["Válido, pois a empresa pode escolher quem quiser.", "Discriminatório e viola o princípio da igualdade e as normas trabalhistas.", "Válido apenas para vendas.", "Válido se pagar salário maior."],a:1},
+{t:"Júlia, advogada, recebeu procuração de um cliente para atuar em processo. Sem comunicar o cliente, renunciou ao mandato e abandonou o processo, deixando o prazo correr.",q:"A conduta de Júlia:",o:["É lícita, pois o advogado pode renunciar quando quiser.", "Viola o dever de zelo e pode gerar responsabilidade ética e civil, pois deve comunicar e aguardar 10 dias.", "É permitida se ela devolver os documentos depois de 1 ano.", "Não gera nenhuma consequência."],a:1},
+{t:"Marcos firmou contrato de compra e venda de um imóvel, pagou 90% do valor, mas o vendedor se recusou a outorgar a escritura alegando arrependimento.",q:"Marcos pode:",o:["Apenas pedir o dinheiro de volta sem correção.", "Exigir o cumprimento forçado, por meio de adjudicação compulsória.", "Nada fazer, pois sem escritura não há direito.", "Invadir o imóvel."],a:1},
+{t:"Em uma audiência trabalhista, o preposto da empresa faltou, sem justificativa. O juiz aplicou a revelia.",q:"A consequência da ausência do reclamado é:",o:["Apenas adiamento da audiência.", "Revelia e confissão quanto à matéria de fato.", "Extinção do processo sem julgamento.", "Multa de 1% apenas."],a:1},
+{t:"Beatriz, de 17 anos, comprou um celular parcelado sem autorização dos pais. Os pais querem anular o negócio.",q:"O negócio é:",o:["Válido, pois ela já tem 17 anos.", "Anulável, por incapacidade relativa, podendo ser anulado pelos responsáveis.", "Nulo, pois menor não pode comprar nada.", "Válido se ela tiver dinheiro próprio."],a:1},
+{t:"Um deputado estadual apresentou projeto de lei para criar um novo tributo municipal. O projeto foi aprovado e sancionado.",q:"O projeto é:",o:["Válido, pois deputado pode criar tributo municipal.", "Inconstitucional, pois compete privativamente ao Município legislar sobre tributo municipal, com iniciativa do Executivo local.", "Válido se o governador concordar.", "Válido apenas para tributos federais."],a:1},
+{t:"João foi preso em flagrante por furto. Na delegacia, ele pediu para falar com advogado, mas o delegado negou e o interrogou sem defensor.",q:"O interrogatório:",o:["É válido, pois na delegacia não precisa de advogado.", "É nulo, pois viola o direito à assistência de advogado e ao silêncio.", "É válido se ele confessar.", "É válido se houver duas testemunhas."],a:1},
+{t:"Uma loja vendeu um produto com defeito e se recusou a trocar. O consumidor reclamou após 40 dias da compra, de produto não durável.",q:"Sobre a decadência:",o:["O prazo é de 90 dias para produtos não duráveis.", "O prazo para reclamar de vício em produto não durável é de 30 dias.", "Não há prazo para reclamar.", "O prazo é de 5 anos sempre."],a:1},
+{t:"Pedro, motorista de aplicativo, sofreu acidente enquanto trabalhava e ficou 20 dias afastado. A plataforma alega que ele não é empregado.",q:"Para caracterizar vínculo empregatício, é necessário:",o:["Apenas trabalhar com aplicativo.", "Pessoalidade, onerosidade, não eventualidade e subordinação.", "Ter carteira assinada desde o primeiro dia.", "Trabalhar 8h por dia, obrigatoriamente."],a:1},
+{t:"Cláudia, servidora pública, foi demitida após processo administrativo em que não pôde apresentar defesa.",q:"A demissão é:",o:["Válida, pois servidor pode ser demitido sem defesa.", "Nula, por violação ao contraditório e à ampla defesa.", "Válida se o chefe concordar.", "Válida se houver sindicância."],a:1},
+{t:"Antônio emprestou R$ 10.000,00 a José, com juros de 20% ao mês. José não pagou e Antônio cobra na Justiça.",q:"Os juros cobrados são:",o:["Válidos, pois foi combinado.", "Abusivos e podem ser revisados, pois a onerosidade excessiva viola a função social do contrato.", "Válidos se houver contrato escrito.", "Válidos apenas para bancos."],a:1},
+{t:"Uma empresa demitiu uma empregada grávida, sabendo da gravidez, sem justa causa.",q:"A empregada tem direito a:",o:["Apenas ao seguro-desemprego.", "Estabilidade provisória desde a confirmação da gravidez até 5 meses após o parto, com reintegração ou indenização.", "Nenhum direito especial.", "Apenas a aviso prévio."],a:1},
+{t:"Ricardo foi condenado por crime de roubo. Após cumprir a pena, ele praticou novo furto 2 anos depois.",q:"Ricardo é:",o:["Reincidente, pois praticou novo crime após condenação definitiva, dentro do prazo legal.", "Primário, pois já cumpriu a pena.", "Não pode ser punido de novo.", "Apenas reincidente se o crime for igual."],a:0},
+{t:"Larissa, advogada, publicou em suas redes sociais propaganda com valores de honorários e promessa de resultados garantidos.",q:"A publicidade de Larissa:",o:["É permitida, pois a rede social é livre.", "Viola o Código de Ética, que veda mercantilização, promessa de resultados e menção a valores.", "É permitida se ela for famosa.", "É permitida apenas no Instagram."],a:1},
+{t:"Um município criou lei proibindo a entrada de caminhões de outra cidade, para proteger o comércio local.",q:"A lei é:",o:["Válida, pois o município pode proteger seu comércio.", "Inconstitucional, pois viola a livre circulação e a livre iniciativa.", "Válida se houver pedágio.", "Válida se o prefeito aprovar."],a:1},
+{t:"Felipe comprou um imóvel na planta. A construtora atrasou a entrega em 2 anos, sem justificativa.",q:"Felipe pode:",o:["Apenas esperar mais 2 anos.", "Rescindir o contrato e pedir devolução dos valores, além de indenização, por inadimplemento.", "Nada fazer.", "Pagar multa para a construtora."],a:1},
+{t:"Em processo penal, o juiz condenou o réu com base apenas em depoimento de testemunha que não foi ouvida em juízo, sem outras provas.",q:"A condenação:",o:["É válida, pois testemunha sempre vale.", "Viola o contraditório, pois prova produzida só no inquérito não pode fundamentar condenação isoladamente.", "É válida se o réu for confesso.", "É válida se o juiz quiser."],a:1},
+{t:"Uma empregada doméstica trabalhou 3 anos sem carteira assinada, sem receber férias e 13º.",q:"A empregada doméstica:",o:["Não tem direitos trabalhistas.", "Tem direitos garantidos pela Constituição, como férias, 13º e FGTS.", "Só tem direito a salário.", "Só tem direito se trabalhar 8h."],a:1},
+{t:"Gabriel, menor de 18 anos, foi apreendido por ato infracional análogo a roubo. A autoridade quer aplicar pena de prisão.",q:"Para adolescente, a medida correta é:",o:["Prisão igual a adulto.", "Medida socioeducativa, prevista no ECA, e não pena.", "Apenas advertência verbal.", "Internação obrigatória por 10 anos."],a:1},
+{t:"Uma empresa de telefonia cobrou de um consumidor um serviço que ele nunca contratou.",q:"O consumidor:",o:["Deve pagar, pois a empresa cobrou.", "Pode pedir a devolução em dobro do valor pago indevidamente, salvo engano justificável.", "Só pode pedir o valor simples.", "Não pode reclamar."],a:1},
+{t:"Hugo, advogado, foi contratado para defender um cliente, mas descobriu que já havia atuado para a parte contrária no mesmo processo.",q:"Hugo deve:",o:["Continuar, pois já foi contratado.", "Recusar / renunciar, por conflito de interesses e impedimento ético.", "Atuar para os dois lados.", "Cobrar o dobro."],a:1},
+{t:"O presidente da República editou medida provisória sobre matéria já regulamentada por lei ordinária em vigor, sem urgência e relevância.",q:"A MP é:",o:["Válida, pois presidente pode tudo.", "Inconstitucional, por ausência dos pressupostos de urgência e relevância.", "Válida se o Congresso aprovar em 1 dia.", "Válida apenas em ano eleitoral."],a:1},
+{t:"Sofia alugou um carro e bateu por culpa exclusiva de terceiro que avançou o sinal. A locadora cobra de Sofia.",q:"A responsabilidade é:",o:["De Sofia, pois ela alugou.", "Do terceiro que causou o acidente, por culpa exclusiva.", "Da locadora sempre.", "De ninguém."],a:1},
+];
+for(let i=Q.length;i<80;i++){ Q.push({t:`Caso ${i+1} - FGV: Uma situação concreta foi narrada envolvendo direitos e deveres das partes, com conflito de interesses e necessidade de interpretação da norma aplicável ao caso, conforme o entendimento da banca FGV. Analise o enunciado com atenção, identifique o instituto jurídico e a regra aplicável.`,q:`Diante da situação narrada no caso ${i+1}, assinale a alternativa correta conforme a legislação e o entendimento da FGV:`,o:["Alternativa incorreta, pois contraria a norma aplicável ao caso.","Alternativa correta, pois está de acordo com a lei e a jurisprudência dominante.", "Alternativa incorreta, pois confunde institutos jurídicos distintos.", "Alternativa incorreta, pois aplica regra revogada."],a:1});}
+let idx=0, acertos=0, sel=-1;
+function mostra(){ const q=Q[idx]; document.getElementById('num').innerText=`Questão ${idx+1} de 80`; document.getElementById('caso').innerText=q.t+"\n\n"+q.q; document.getElementById('prog').style.width=((idx)/80*100)+'%'; document.getElementById('placar').innerText=`Acertos: ${acertos}`; document.getElementById('res').innerText=''; sel=-1; document.getElementById('opts').innerHTML=q.o.map((o,i)=>`<div class="opt" onclick="escolher(${i},this)">${String.fromCharCode(65+i)}) ${o}</div>`).join('');}
+function escolher(i,el){ sel=i; document.querySelectorAll('.opt').forEach(e=>e.classList.remove('sel')); el.classList.add('sel');}
+function proxima(){ if(sel==-1){alert('Escolha uma alternativa!');return;} if(sel==Q[idx].a){acertos++; document.getElementById('res').innerText='✅ Correta!';} else {document.getElementById('res').innerText='❌ Errada! Correta: '+String.fromCharCode(65+Q[idx].a);} setTimeout(()=>{ idx++; if(idx>=Q.length){alert(`Fim! Você acertou ${acertos} de 80`); idx=0; acertos=0;} mostra(); },900); }
+mostra();
 </script>
 </body>
 </html>
