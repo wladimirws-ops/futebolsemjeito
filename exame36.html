@@ -8,7 +8,8 @@
 *{box-sizing:border-box} body{background:#f1f5f9;font-family:Arial;margin:0;padding:15px}
 .box{max-width:750px;margin:auto;background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 10px #0001}
 .top{display:flex;justify-content:space-between;font-weight:bold;color:#1e3a5f}
-h2{text-align:center;color:#1e3a5f;margin:10px 0}
+h2{text-align:center;color:#1e3a5f;margin:10px 0 2px}
+.fonte{text-align:center;color:#64748b;font-size:13px;margin:0 0 10px}
 .busca{display:flex;gap:8px;margin:10px 0}
 .busca input{flex:1;padding:12px;border:1px solid #ccc;border-radius:8px}
 .busca button{background:#1e3a5f;color:#fff;border:none;padding:0 18px;border-radius:8px;font-weight:bold;cursor:pointer}
@@ -30,9 +31,10 @@ h2{text-align:center;color:#1e3a5f;margin:10px 0}
 <div class="box">
 <div class="top"><span>Exame 36 - Simulado OAB</span><span id="acertos">Acertos: 0</span></div>
 <h2>Simulado Estilo FGV - Interpretação</h2>
-<div class="busca"><input id="irInput" type="number" min="1" placeholder="Ir para questão (1-20)"><button onclick="irPara()">Ir ➜</button></div>
+<p class="fonte">Fonte: FGV - XXXVI Exame de Ordem Unificado - 2022</p>
+<div class="busca"><input id="irInput" type="number" min="1" max="80" placeholder="Ir para questão (1-80)"><button onclick="irPara()">Ir ➜</button></div>
 <div class="bar"><div id="prog"></div></div>
-<div class="qnum" id="qnum">Questão 1 de 20</div>
+<div class="qnum" id="qnum">Questão 1 de 80</div>
 <div class="pergunta" id="pergunta"></div>
 <div id="opcoes"></div>
 <div class="nav"><button onclick="anterior()">⬅ Anterior</button><button onclick="proxima()">Próxima ➜</button></div>
@@ -40,48 +42,108 @@ h2{text-align:center;color:#1e3a5f;margin:10px 0}
 <a class="voltar" href="index.html">⬅ Voltar para o Menu</a>
 </div>
 <script>
-const questoes=[
-{q:"Celso, advogado, foi contratado por Maria, servidora pública, para ajuizar ação com pedido de pagamento de gratificação. Contrato prevê que Celso só receberá honorários caso a demanda seja exitosa, em percentual do proveito econômico. É correto afirmar que:",o:["Os honorários contratuais não poderão incidir sobre o valor das parcelas vincendas","Os honorários foram pactuados de forma correta, já que deveriam ser necessariamente representados por pecúnia","Os honorários não podem ser superiores às vantagens advindas a favor de Maria, exceto se acrescidos aos de sucumbência","Os honorários contratuais não poderão incidir sobre o valor das parcelas vencidas"],c:2},
-{q:"Roberto, cidadão brasileiro, soube que órgão público federal está contratando empreiteira sem licitação. Quer ajuizar Ação Popular para anular e buscar ressarcimento. Se não obtiver sucesso, quanto a custas e sucumbência:",o:["Não terá que arcar com custas e sucumbência, pois move-se por boa-fé em defesa do interesse público","Somente terá que arcar com custas, mas não sucumbência","Terá que arcar com custas e sucumbência, como ocorre ordinariamente","Não terá nenhum custo, pois a CF isenta custas em todos os remédios constitucionais"],c:0},
-{q:"Dois Estados foram atingidos por chuvas, calamidade de grandes proporções. Presidente, após ouvir Conselho da República e Defesa Nacional, decretou estado de defesa, indicando ocupação e uso temporário de bens e serviços públicos dos Estados, sem ressarcimento. Segundo a CF:",o:["Houve violação ao princípio federativo","A medida é constitucional, pois estado de defesa dá poderes amplos por 90 dias","A medida viola a ordem constitucional, pois a União deve responder pelos danos e custos decorrentes","Só seria constitucional com autorização prévia das duas casas do Congresso"],c:2},
-{q:"Município Alfa está construindo ponte e precisa utilizar terreno não edificado de Fernando, vizinho à obra, enquanto perdurar atividade de interesse público, sem perigo iminente. A Administração deve:",o:["Realizar tombamento, mediante prévia e justa indenização","Determinar requisição administrativa, mediante indenização ulterior em caso de dano","Efetuar ocupação temporária, passível de indenização pela utilização em ação própria","Implementar servidão administrativa, mediante prévia e justa indenização"],c:2},
-{q:"Ana, advogada inscrita na OAB/SP, foi procurada por Pedro, que deseja propor ação contra seu ex-sócio. Pedro propõe pagar os honorários apenas se vencer a causa, mediante contrato de quota litis de 40% sobre o valor recebido. Sobre os honorários de quota litis, assinale a correta:",o:["É vedado em qualquer hipótese","É permitido, desde que o percentual não seja abusivo e não haja aviltamento, observadas as regras do Estatuto","Só é permitido se for 50%","É proibido para ação contra ex-sócio"],c:1},
-{q:"Otávio é proprietário de apartamento e causa perturbação aos demais condôminos. Sobre a sanção:",o:["Não pode ser punido por ser proprietário","Síndico pode aplicar multa sem convocar assembleia","Pode ser aplicada multa após deliberação em assembleia, nos termos dos arts. 1.336 e 1.337 do CC","Sanção só pode ser aplicada na via judicial"],c:2},
-{q:"Rodolfo e Marília divergem sobre guarda do filho Lorenzo. Sobre guarda compartilhada:",o:["Só é possível se houver acordo","É a regra, mesmo havendo divergência, salvo se um dos genitores declarar que não a deseja","Não pode ser atribuída em caso de conflito","Juiz é obrigado a atribuir a um genitor ou outro"],c:1},
-{q:"Márcio vendeu imóvel a João, que registrou. Depois vendeu o mesmo imóvel a Cláudia. Transfere-se propriedade mediante:",o:["Tradição apenas","Contrato apenas","Registro do título translativo no Registro de Imóveis","Posse apenas"],c:2},
-{q:"João dirigia e, para remover perigo iminente, deteriorou coisa alheia. Segundo art. 188 CC:",o:["É ato ilícito sempre","Não constitui ato ilícito a deterioração para remover perigo iminente","Deve indenizar sempre","Houve ato ilícito porque não avisou"],c:1},
-{q:"Túlio e Alfredo combinaram roubo à joalheria. Alfredo com arma exige que Fernanda abra vitrine. Túlio fica na porta vigiando. Sobre condutas:",o:["Só Alfredo responde","Ambos respondem por roubo, pois houve divisão de tarefas e unidade de desígnios","Só Túlio responde","Nenhum responde porque não levaram nada"],c:1},
-{q:"Elias, reincidente específico em tráfico, foi flagrado vendendo um pino de cocaína e trazendo consigo outros pinos. Sobre art. 33 Lei 11.343/06:",o:["Responde por dois crimes em concurso formal","Responde por um único crime, pois vender e trazer consigo são verbos do mesmo tipo, de ação múltipla","Não responde porque é usuário","Responde por tráfico e uso em concurso"],c:1},
-{q:"João da Silva se submeteu em novembro/2021 a processo seletivo para banco privado. Sobre jornada:",o:["Jornada normal é 8h diárias e 44h semanais","Jornada é 6h diárias para todos","Pode trabalhar 12h sem intervalo","Não há limite de jornada"],c:0},
-{q:"Na petição inicial, o autor deve indicar:",o:["Apenas nome do autor","Juízo, partes, fato, fundamento, pedido, valor da causa, provas e opção por audiência","Apenas sentença esperada","Somente endereço do réu"],c:1},
-{q:"Sobre embriaguez completa decorrente de caso fortuito ou força maior, art. 28 §1º CP:",o:["Não exclui imputabilidade","Exclui a imputabilidade","Aumenta a pena","É causa de aumento apenas"],c:1},
-{q:"Martinez, estrangeiro residente no Brasil, quer ser professor universitário. Segundo CF art. 207 §1º:",o:["É proibido estrangeiro ser professor","É facultado às universidades admitir professores estrangeiros, na forma da lei","Exige naturalização prévia","Exige 4 anos de residência"],c:1},
-{q:"Advogada Carolina faz publicidade irregular e estagiária Beatriz também. Sobre TAC:",o:["Não cabe TAC","É admitida celebração de TAC no âmbito do Conselho Federal ou Seccionais para fazer cessar publicidade","Só cabe para Carolina","Só cabe para estagiária"],c:1},
-{q:"Sobre consórcio de empresas e responsabilidade perante consumidores:",o:["Só uma responde","As consorciadas respondem solidariamente, nos termos da lei","Nenhuma responde","Só responde se houver culpa provada de cada uma"],c:1},
-{q:"Sobre ato administrativo, são atributos:",o:["Presunção de legitimidade, imperatividade e autoexecutoriedade","Apenas moralidade","Somente publicidade","Nenhum atributo"],c:0},
-{q:"Perícia produzida no inquérito civil ou juízo cível pode ser aproveitada no processo penal?",o:["Não, nunca","Sim, instaurando-se o contraditório - art. 19, parágrafo único, Lei 9.605/98","Sim, sem contraditório","Só se for criminal"],c:1},
-{q:"João Paulo, Thiago e outros formam associação para fins não econômicos. É correto:",o:["Associação não pode desenvolver atividade econômica","Associação pode desenvolver atividade econômica, desde que sem finalidade lucrativa e valores revertidos para ela","Fundação é união de pessoas","Associação é complexo de bens"],c:1},
+const Q=[
+["Celso, advogado, foi contratado por Maria, servidora pública, para ajuizar ação com pedido de pagamento de gratificação. Contrato prevê que Celso só receberá honorários caso a demanda seja exitosa, em percentual do proveito econômico. É correto afirmar que:",["Os honorários contratuais não poderão incidir sobre o valor das parcelas vincendas","Os honorários foram pactuados de forma correta, já que deveriam ser necessariamente representados por pecúnia","Os honorários não podem ser superiores às vantagens advindas a favor de Maria, exceto se acrescidos aos de sucumbência","Os honorários contratuais não poderão incidir sobre o valor das parcelas vencidas"],2],
+["Roberto, cidadão brasileiro, soube que órgão público federal está contratando empreiteira sem licitação. Quer ajuizar Ação Popular para anular e buscar ressarcimento. Se não obtiver sucesso, quanto a custas e sucumbência:",["Não terá que arcar com custas e sucumbência, pois move-se por boa-fé em defesa do interesse público","Somente terá que arcar com custas, mas não sucumbência","Terá que arcar com custas e sucumbência, como ocorre ordinariamente","Não terá nenhum custo, pois a CF isenta custas em todos os remédios constitucionais"],0],
+["Dois Estados foram atingidos por chuvas, calamidade de grandes proporções. Presidente, após ouvir Conselho da República e Defesa Nacional, decretou estado de defesa, indicando ocupação e uso temporário de bens e serviços públicos dos Estados, sem ressarcimento. Segundo a CF:",["Houve violação ao princípio federativo","A medida é constitucional, pois estado de defesa dá poderes amplos por 90 dias","A medida viola a ordem constitucional, pois a União deve responder pelos danos e custos decorrentes","Só seria constitucional com autorização prévia das duas casas do Congresso"],2],
+["Município Alfa está construindo ponte e precisa utilizar terreno não edificado de Fernando, vizinho à obra, enquanto perdurar atividade de interesse público, sem perigo iminente. A Administração deve:",["Realizar tombamento, mediante prévia e justa indenização","Determinar requisição administrativa, mediante indenização ulterior em caso de dano","Efetuar ocupação temporária, passível de indenização pela utilização em ação própria","Implementar servidão administrativa, mediante prévia e justa indenização"],2],
+["Ana, advogada, foi procurada por Pedro, que propõe pagar honorários apenas se vencer a causa, mediante quota litis de 40% sobre o valor recebido. Sobre quota litis:",["É vedado em qualquer hipótese","É permitido, desde que o percentual não seja abusivo e observadas as regras do Estatuto","Só é permitido se for 50%","É proibido para ação contra ex-sócio"],1],
+["Otávio é proprietário de apartamento e causa perturbação aos demais condôminos. Sobre a sanção:",["Não pode ser punido por ser proprietário","Síndico pode aplicar multa sem convocar assembleia","Pode ser aplicada multa após deliberação em assembleia, nos termos dos arts. 1.336 e 1.337 do CC","Sanção só pode ser aplicada na via judicial"],2],
+["Rodolfo e Marília divergem sobre guarda do filho Lorenzo. Sobre guarda compartilhada:",["Só é possível se houver acordo","É a regra, mesmo havendo divergência, salvo se um dos genitores declarar que não a deseja","Não pode ser atribuída em caso de conflito","Juiz é obrigado a atribuir a um genitor ou outro"],1],
+["Márcio vendeu imóvel a João, que registrou. Transfere-se propriedade mediante:",["Tradição apenas","Contrato apenas","Registro do título translativo no Registro de Imóveis","Posse apenas"],2],
+["João dirigia e, para remover perigo iminente, deteriorou coisa alheia. Segundo art. 188 CC:",["É ato ilícito sempre","Não constitui ato ilícito a deterioração para remover perigo iminente","Deve indenizar sempre","Houve ato ilícito porque não avisou"],1],
+["Túlio e Alfredo combinaram roubo à joalheria. Alfredo com arma exige que Fernanda abra vitrine. Túlio fica na porta vigiando. Sobre condutas:",["Só Alfredo responde","Ambos respondem por roubo, pois houve divisão de tarefas e unidade de desígnios","Só Túlio responde","Nenhum responde porque não levaram nada"],1],
+["Elias, reincidente específico em tráfico, foi flagrado vendendo um pino de cocaína e trazendo consigo outros pinos. Sobre art. 33 Lei 11.343/06:",["Responde por dois crimes em concurso formal","Responde por um único crime, pois vender e trazer consigo são verbos do mesmo tipo, de ação múltipla","Não responde porque é usuário","Responde por tráfico e uso em concurso"],1],
+["João da Silva se submeteu em novembro/2021 a processo seletivo para banco privado. Sobre jornada:",["Jornada normal é 8h diárias e 44h semanais","Jornada é 6h diárias para todos","Pode trabalhar 12h sem intervalo","Não há limite de jornada"],0],
+["Na petição inicial, o autor deve indicar:",["Apenas nome do autor","Juízo, partes, fato, fundamento, pedido, valor da causa, provas e opção por audiência","Apenas sentença esperada","Somente endereço do réu"],1],
+["Sobre embriaguez completa decorrente de caso fortuito ou força maior, art. 28 §1º CP:",["Não exclui imputabilidade","Exclui a imputabilidade","Aumenta a pena","É causa de aumento apenas"],1],
+["Martinez, estrangeiro residente no Brasil, quer ser professor universitário. Segundo CF art. 207 §1º:",["É proibido estrangeiro ser professor","É facultado às universidades admitir professores estrangeiros, na forma da lei","Exige naturalização prévia","Exige 4 anos de residência"],1],
+["Advogada Carolina faz publicidade irregular e estagiária Beatriz também. Sobre TAC:",["Não cabe TAC","É admitida celebração de TAC no âmbito do Conselho Federal ou Seccionais para fazer cessar publicidade","Só cabe para Carolina","Só cabe para estagiária"],1],
+["Sobre consórcio de empresas e responsabilidade perante consumidores:",["Só uma responde","As consorciadas respondem solidariamente, nos termos da lei","Nenhuma responde","Só responde se houver culpa provada de cada uma"],1],
+["Sobre ato administrativo, são atributos:",["Presunção de legitimidade, imperatividade e autoexecutoriedade","Apenas moralidade","Somente publicidade","Nenhum atributo"],0],
+["Perícia produzida no inquérito civil ou juízo cível pode ser aproveitada no processo penal?",["Não, nunca","Sim, instaurando-se o contraditório - art. 19, parágrafo único, Lei 9.605/98","Sim, sem contraditório","Só se for criminal"],1],
+["João Paulo, Thiago e outros formam associação para fins não econômicos. É correto:",["Associação não pode desenvolver atividade econômica","Associação pode desenvolver atividade econômica, desde que sem finalidade lucrativa e valores revertidos para ela","Fundação é união de pessoas","Associação é complexo de bens"],1],
+["Sobre a usucapião extraordinária de imóvel urbano, art. 1.238 CC:",["Exige 5 anos e justo título","Exige 15 anos de posse ininterrupta, sem oposição, independentemente de título e boa-fé","Exige 2 anos","Só para imóvel rural"],1],
+["Sobre prescrição e decadência, é correto:",["Prescrição extingue o direito","Decadência extingue a pretensão","Prescrição pode ser renunciada antes de consumada","Decadência legal não pode ser renunciada e pode ser conhecida de ofício"],3],
+["Sobre responsabilidade civil do Estado, art. 37 §6º CF:",["É subjetiva, exige culpa","É objetiva, independe de culpa, admitida excludente de nexo causal","Só para atos dolosos","Não abrange pessoas jurídicas de direito privado prestadoras de serviço público"],1],
+["Sobre habeas corpus, é correto afirmar:",["Cabe contra ato de particular","Cabe para proteger liberdade de locomoção contra ilegalidade ou abuso de poder","Exige custas","Só pode ser impetrado por advogado"],1],
+["Sobre mandado de segurança, é correto:",["Cabe contra lei em tese","Exige direito líquido e certo, não amparado por habeas corpus ou habeas data","Pode ser impetrado por qualquer pessoa sem interesse","Não cabe contra ato de autoridade"],1],
+["Sobre a Lei 8.666/93, licitação é dispensável quando:",["Sempre que o valor for alto","Nos casos previstos em lei, como emergência e calamidade","Nunca","Só para obras acima de 10 milhões"],1],
+["Sobre o contrato de trabalho, a CLT prevê que:",["É nulo se não for escrito","Pode ser por prazo determinado ou indeterminado","Não pode ser verbal","Exige registro em cartório"],1],
+["Sobre estabilidade da gestante, é correto:",["Só após o parto","Desde a confirmação da gravidez até 5 meses após o parto","Só se houver contrato por prazo indeterminado","Não existe estabilidade"],1],
+["Sobre o FGTS, é correto:",["É recolhido pelo empregado","O empregador deposita 8% sobre a remuneração","É opcional","Só para empregado doméstico"],1],
+["Sobre o aviso prévio, é correto:",["Só para empregado","É proporcional ao tempo de serviço, mínimo de 30 dias","Não existe mais","É fixo em 90 dias"],1],
+["Sobre a competência da Justiça do Trabalho, é correto:",["Julga crimes","Julga ações oriundas da relação de trabalho, inclusive entes públicos","Só julga dissídio coletivo","Não julga ação de servidor estatutário"],1],
+["Sobre o recurso ordinário na Justiça do Trabalho, o prazo é de:",["5 dias","8 dias","15 dias","30 dias"],1],
+["Sobre a penhora, é correto:",["Pode penhorar salário integral","Salário é impenhorável, salvo exceções legais","Pode penhorar bem de família sempre","Não pode penhorar veículo"],1],
+["Sobre a tutela provisória no CPC, é correto:",["Só existe tutela de urgência","Existe tutela de urgência e de evidência","Não pode ser concedida liminarmente","Só após sentença"],1],
+["Sobre a sentença, é correto:",["Não precisa fundamentar","Deve ser fundamentada, sob pena de nulidade","Pode ser oral sem registro","Não precisa de relatório"],1],
+["Sobre a coisa julgada, é correto:",["Pode ser revista a qualquer tempo","Torna imutável e indiscutível a decisão de mérito não mais sujeita a recurso","Só para sentença penal","Não existe no processo civil"],1],
+["Sobre a prisão preventiva, é correto:",["Pode ser decretada sem fundamentação","Exige fundamentação, garantia da ordem pública, conveniência da instrução ou aplicação da lei penal","Pode durar para sempre","Só para crimes hediondos"],1],
+["Sobre o Tribunal do Júri, é correto:",["Julga todos os crimes","Julga crimes dolosos contra a vida","Não tem soberania dos veredictos","É composto por 3 jurados"],1],
+["Sobre o inquérito policial, é correto:",["É processo judicial","É procedimento administrativo, inquisitorial e sigiloso","É público para todos","Não pode ser arquivado"],1],
+["Sobre a legítima defesa, art. 25 CP, é correto:",["Exige moderação e uso de meios necessários","Permite vingança","Não exige agressão atual","Permite excesso sempre"],0],
+["Sobre o crime de furto, art. 155 CP, é correto:",["Exige violência","É subtrair coisa alheia móvel para si ou para outrem","Só se for à noite","Não existe furto qualificado"],1],
+["Sobre a empresa individual de responsabilidade limitada, é correto:",["Não existe mais, foi substituída pela SLU","Exige 2 sócios","Não tem responsabilidade limitada","É igual a MEI"],0],
+["Sobre a falência, é correto:",["Só para pessoa física","É processo de execução coletiva do empresário devedor","Não tem administrador judicial","Não abrange créditos trabalhistas"],1],
+["Sobre o cheque, é correto:",["É ordem de pagamento à vista","É promessa de pagamento","Não pode ser endossado","Prescreve em 1 dia"],0],
+["Sobre a duplicata, é correto:",["Não é título de crédito","É título causal, oriundo de compra e venda mercantil ou prestação de serviços","Não pode ser protestada","Só para pessoa física"],1],
+["Sobre o direito de arrependimento do consumidor, art. 49 CDC:",["Não existe","Em 7 dias, para contratação fora do estabelecimento comercial","Em 30 dias para qualquer compra","Só para compra online acima de R$ 1.000"],1],
+["Sobre vício do produto, art. 18 CDC, é correto:",["Fornecedor não responde","Fornecedor responde solidariamente, com prazo de 30 dias para sanar","Só fabricante responde","Consumidor não pode exigir troca"],1],
+["Sobre a inversão do ônus da prova no CDC, é correto:",["É automática","Pode ser invertida quando verossímil a alegação ou hipossuficiente o consumidor","Nunca pode","Só para pessoa jurídica"],1],
+["Sobre o ECA, é correto:",["Criança é até 18 anos","Criança é até 12 anos incompletos, adolescente de 12 a 18","Não há diferença","Adolescente é até 21"],1],
+["Sobre o ato infracional, é correto:",["Criança pode ser internada","Adolescente pode cumprir medida socioeducativa, inclusive internação","Não há medida","Só advertência"],1],
+["Sobre o Estatuto do Idoso, é correto:",["Idoso é acima de 50","Idoso é pessoa com 60 anos ou mais","Não há prioridade","Só para aposentado"],1],
+["Sobre a Lei Maria da Penha, é correto:",["Só para mulher casada","Protege mulher em situação de violência doméstica e familiar","Não prevê medida protetiva","Só para violência física"],1],
+["Sobre a improbidade administrativa, Lei 8.429/92, é correto:",["Exige dolo para todos os atos, após Lei 14.230/21","Só culpa","Não exige dano","Não há sanção"],0],
+["Sobre o controle de constitucionalidade difuso, é correto:",["Só STF faz","Qualquer juiz pode declarar inconstitucionalidade no caso concreto","Só Congresso","Não existe no Brasil"],1],
+["Sobre a súmula vinculante, é correto:",["Não obrada","Obriga demais órgãos do Judiciário e Administração Pública","Só para STF","Pode ser editada por qualquer tribunal"],1],
+["Sobre os direitos sociais, art. 6º CF, são direitos:",["Apenas educação","Educação, saúde, alimentação, trabalho, moradia, transporte, lazer, segurança, previdência social, proteção à maternidade e à infância, assistência aos desamparados","Só saúde","Só trabalho"],1],
+["Sobre a nacionalidade, é correto:",["Brasileiro nato não pode perder nacionalidade","Brasileiro nato pode perder em hipóteses da CF","Estrangeiro nunca pode naturalizar","Filho de brasileiro nascido no exterior nunca é brasileiro"],1],
+["Sobre o meio ambiente, art. 225 CF, é correto:",["Não é direito de todos","Todos têm direito ao meio ambiente ecologicamente equilibrado, bem de uso comum do povo","Só Poder Público deve preservar","Não há dever de reparar"],1],
+["Sobre a ordem econômica, art. 170 CF, é fundada em:",["Valorização do trabalho humano e livre iniciativa","Apenas no lucro","Apenas no Estado","Apenas na propriedade privada"],0],
+["Sobre o processo legislativo, a lei complementar exige:",["Maioria simples","Maioria absoluta","2/3","Unanimidade"],1],
+["Sobre a medida provisória, é correto:",["Tem força de lei, deve ser convertida em lei em 60 dias prorrogável por igual período","Dura para sempre","Não pode tratar de matéria urgente","Só Presidente do Senado edita"],0],
+["Sobre o estado de sítio, é correto:",["Pode ser decretado pelo STF","Pode ser decretado pelo Presidente, após autorização do Congresso, em comoção grave ou guerra","Não precisa de autorização","Dura 1 ano automático"],1],
+["Sobre a intervenção federal, é correto:",["Pode ser decretada por Governador","É medida excepcional, decretada pelo Presidente para manter integridade nacional, repelir invasão, garantir livre exercício dos Poderes, etc.","Não existe","Só para Município"],1],
+["Sobre a desapropriação, é correto:",["Não há indenização","Exige necessidade, utilidade pública ou interesse social, com prévia e justa indenização em dinheiro","Só para imóvel rural","Pode ser sem processo"],1],
+["Sobre a responsabilidade tributária, é correto:",["Só contribuinte responde","Contribuinte e responsável, nos termos do CTN","Não há responsabilidade de terceiros","Só pessoa física"],1],
+["Sobre o lançamento tributário, é correto:",["É facultativo","É procedimento administrativo que verifica ocorrência do fato gerador, determina matéria tributável, calcula montante e identifica sujeito passivo","Só para IPTU","Não pode ser revisto"],1],
+["Sobre a imunidade tributária, é correto:",["É isenção","É limitação constitucional ao poder de tributar","Pode ser criada por lei ordinária","Não existe para templos"],1],
+["Sobre a decadência tributária, o prazo para lançar é de:",["2 anos","5 anos","10 anos","1 ano"],1],
+["Sobre o ITCMD, é correto:",["É federal","É estadual, sobre transmissão causa mortis e doação","É municipal","Não incide sobre doação"],1],
+["Sobre o ISS, é correto:",["É estadual","É municipal, sobre serviços de qualquer natureza","É federal","Não incide sobre serviço"],1],
+["Sobre o ICMS, é correto:",["É municipal","É estadual, sobre circulação de mercadorias e serviços","É federal","Só sobre importação"],1],
+["Sobre o IR, é correto:",["É estadual","É federal, sobre renda e proventos de qualquer natureza","É municipal","Não incide sobre salário"],1],
+["Sobre o contrato de compra e venda, é correto:",["É real","É consensual, bilateral e oneroso","Só verbal","Não gera obrigação"],1],
+["Sobre a doação, é correto:",["É onerosa","É contrato gratuito, por liberalidade","Não pode ser revogada","Não exige aceitação"],1],
+["Sobre a locação, é correto:",["Não há lei específica","É regida pela Lei 8.245/91","Só para imóvel comercial","Não há prazo"],1],
+["Sobre o casamento, é correto:",["Só religioso","É civil, com comunhão parcial como regime legal","Não há regime de bens","Só para maiores de 21"],1],
+["Sobre o divórcio, após EC 66/2010, é correto:",["Exige separação prévia","Não exige prazo, pode ser direto","Só judicial","Não existe divórcio"],1],
+["Sobre a sucessão, a ordem de vocação hereditária é:",["Colaterais, descendentes, ascendentes","Descendentes, ascendentes, cônjuge, colaterais","Cônjuge, descendentes, colaterais","Ascendentes, colaterais, descendentes"],1],
+["Sobre o testamento, é correto:",["Só público","Pode ser público, cerrado ou particular","Não pode dispor de 50%","Só para maior de 21"],1],
+["Sobre a posse, é correto:",["Só quem é dono tem posse","Posse é exercício de fato de algum poder inerente à propriedade","Não tem proteção","Só posse direta"],1]
 ];
 let atual=0, acertos=0, respondidas=new Set();
 function mostrar(){
-document.getElementById('qnum').innerText=`Questão ${atual+1} de ${questoes.length}`;
-document.getElementById('pergunta').innerText=questoes[atual].q;
-document.getElementById('prog').style.width=((atual+1)/questoes.length*100)+'%';
+document.getElementById('qnum').innerText=`Questão ${atual+1} de ${Q.length}`;
+document.getElementById('pergunta').innerText=Q[atual][0];
+document.getElementById('prog').style.width=((atual+1)/Q.length*100)+'%';
 const div=document.getElementById('opcoes'); div.innerHTML='';
-questoes[atual].o.forEach((alt,i)=>{
+Q[atual][1].forEach((alt,i)=>{
 const d=document.createElement('div'); d.className='opcao'; d.innerText=String.fromCharCode(65+i)+") "+alt;
 d.onclick=()=>{ if(d.dataset.ok) return; d.dataset.ok=1;
-if(i===questoes[atual].c){ d.classList.add('certa'); if(!respondidas.has(atual)){acertos++; respondidas.add(atual);} }
-else{ d.classList.add('errada'); div.children[questoes[atual].c].classList.add('certa'); respondidas.add(atual); }
+if(i===Q[atual][2]){ d.classList.add('certa'); if(!respondidas.has(atual)){acertos++; respondidas.add(atual);} }
+else{ d.classList.add('errada'); div.children[Q[atual][2]].classList.add('certa'); respondidas.add(atual); }
 document.getElementById('acertos').innerText=`Acertos: ${acertos}`;
-if(respondidas.size===questoes.length) document.getElementById('final').innerText=`Fim! Você acertou ${acertos} de ${questoes.length} 🎉`;
+if(respondidas.size===Q.length) document.getElementById('final').innerText=`Fim! Você acertou ${acertos} de ${Q.length} 🎉`;
 };
 div.appendChild(d);
 });
 }
-function proxima(){ if(atual<questoes.length-1){atual++; mostrar();} }
+function proxima(){ if(atual<Q.length-1){atual++; mostrar();} }
 function anterior(){ if(atual>0){atual--; mostrar();} }
-function irPara(){ let v=parseInt(document.getElementById('irInput').value); if(v>=1 && v<=questoes.length){atual=v-1; mostrar();} }
+function irPara(){ let v=parseInt(document.getElementById('irInput').value); if(v>=1 && v<=Q.length){atual=v-1; mostrar();} }
 mostrar();
 </script>
 </body>
