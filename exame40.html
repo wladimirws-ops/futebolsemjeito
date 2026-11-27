@@ -32,34 +32,34 @@ h2{text-align:center;color:#1e3a5f;margin:10px 0 2px}
 <div class="top"><span>Exame 40 - Simulado OAB</span><span id="acertos">Acertos: 0</span></div>
 <h2>Simulado Estilo FGV - Interpretação</h2>
 <p class="fonte">Fonte: FGV - XL Exame de Ordem Unificado - 2024</p>
-<div class="busca"><input id="irInput" type="number" min="1" max="80" placeholder="Ir para questão (1-80)"><button onclick="irPara()">Ir ➜</button></div>
+<div class="busca"><input id="irInput" type="number" min="1" max="80" placeholder="Ir para questão (1-80)"><button onclick="irPara()">Ir</button></div>
 <div class="bar"><div id="prog"></div></div>
 <div class="qnum" id="qnum">Questão 1 de 80</div>
 <div class="pergunta" id="pergunta"></div>
 <div id="opcoes"></div>
-<div class="nav"><button onclick="anterior()">⬅ Anterior</button><button onclick="proxima()">Próxima ➜</button></div>
+<div class="nav"><button onclick="anterior()">Anterior</button><button onclick="proxima()">Proxima</button></div>
 <div class="final" id="final"></div>
-<a class="voltar" href="index.html">⬅ Voltar para o Menu</a>
+<a class="voltar" href="index.html">Voltar para o Menu</a>
 </div>
 <script>
 const Q=[
 ["Paula, advogada, foi contratada por Lucas para fazer seu divórcio. Lucas quer pagar só se ganhar a casa. Paula explicou a quota litis. Sobre a contratação, é correto:",["É proibida","É permitida a quota litis, desde que não seja abusiva e observe o Estatuto e o Código de Ética","Só se for 50%","É proibida para divórcio"],1],
-["Advogado Ricardo postou no TikTok: 'Sou o melhor advogado criminalista do Brasil, 100% de absolvição, me contrate'. Sobre publicidade, é correto:",["É permitida","É vedada a mercantilização, promessa de resultado e captação, devendo ser sóbria","É permitida se for verdade","É permitida no TikTok"],1],
-["Estagiária Júlia, do 8º período, foi sozinha ao fórum protocolar petição assinada por ela. Sobre atuação do estagiário:",["Pode atuar sozinha","Só pode praticar atos em conjunto com advogado e sob sua responsabilidade","Pode protocolar, mas não assinar","Pode atuar se tiver OAB de estagiário"],1],
+["Advogado Ricardo postou no TikTok que é o melhor advogado criminalista do Brasil, 100 por cento de absolvição, me contrate. Sobre publicidade, é correto:",["É permitida","É vedada a mercantilização, promessa de resultado e captação, devendo ser sóbria","É permitida se for verdade","É permitida no TikTok"],1],
+["Estagiária Júlia, do 8 periodo, foi sozinha ao fórum protocolar petição assinada por ela. Sobre atuação do estagiário:",["Pode atuar sozinha","Só pode praticar atos em conjunto com advogado e sob sua responsabilidade","Pode protocolar, mas não assinar","Pode atuar se tiver OAB de estagiário"],1],
 ["Advogado Marcos abandonou o processo de Ana sem avisar, e Ana perdeu prazo. Sobre renúncia, é correto:",["Pode abandonar","Deve notificar o cliente e continuar por 10 dias, salvo acordo","Não pode renunciar","Renúncia é imediata"],1],
 ["Advogada Fernanda descobriu segredo do cliente que pode incriminá-lo. Promotor pede que ela revele. Sobre sigilo, é correto:",["Deve revelar para promotor","Deve guardar sigilo, salvo grave ameaça à vida e à honra ou quando ela for acusada","Pode revelar se for crime grave","Não há sigilo"],1],
 ["Prefeitura de Alfa quer fazer parque e precisa do terreno de Carlos, que não quer vender. Sobre desapropriação, é correto:",["Pode tomar sem pagar","Exige prévia e justa indenização em dinheiro, por utilidade pública","Pode pagar depois de 10 anos","Pode tomar sem processo"],1],
-["Fiscal multou a padaria de João sem dar defesa, com multa de R$ 50 mil por pão vencido. Sobre o ato, é correto:",["É válido","Deve observar contraditório, ampla defesa, proporcionalidade e motivo, podendo ser anulado se ilegal","É válido por ser poder de polícia","Não pode ser questionado"],1],
-["Concurso de Beta previa 5 vagas para agente. Aprovado em 1º lugar, Pedro não foi nomeado, e nomearam o 10º. Sobre concurso, é correto:",["Pode nomear quem quiser","Deve observar edital, isonomia e ordem de classificação","Não precisa de edital","Pode nomear por indicação"],1],
-["Empresa Alfa assinou contrato com Prefeitura, que aumentou o serviço em 50% sem pagar a mais. Sobre contrato administrativo, é correto:",["Empresa deve aceitar sem nada","Administração pode alterar unilateralmente, mantido equilíbrio econômico-financeiro","É igual a contrato privado","Não pode alterar"],1],
-["Ônibus de concessionária atropelou Maria, que estava na faixa. Sobre responsabilidade, é correto:",["Maria deve provar culpa","É objetiva, art. 37 §6º CF, bastando conduta, dano e nexo, com excludentes","Só Estado responde","Não há indenização"],1],
+["Fiscal multou a padaria de João sem dar defesa, com multa de 50 mil por pão vencido. Sobre o ato, é correto:",["É válido","Deve observar contraditório, ampla defesa, proporcionalidade e motivo, podendo ser anulado se ilegal","É válido por ser poder de polícia","Não pode ser questionado"],1],
+["Concurso de Beta previa 5 vagas para agente. Aprovado em 1 lugar, Pedro não foi nomeado, e nomearam o 10. Sobre concurso, é correto:",["Pode nomear quem quiser","Deve observar edital, isonomia e ordem de classificação","Não precisa de edital","Pode nomear por indicação"],1],
+["Empresa Alfa assinou contrato com Prefeitura, que aumentou o serviço em 50 por cento sem pagar a mais. Sobre contrato administrativo, é correto:",["Empresa deve aceitar sem nada","Administração pode alterar unilateralmente, mantido equilíbrio econômico-financeiro","É igual a contrato privado","Não pode alterar"],1],
+["Ônibus de concessionária atropelou Maria, que estava na faixa. Sobre responsabilidade, é correto:",["Maria deve provar culpa","É objetiva, art. 37 par. 6 CF, bastando conduta, dano e nexo, com excludentes","Só Estado responde","Não há indenização"],1],
 ["Servidora Ana completou 3 anos e foi aprovada no estágio probatório. Ela acha que nunca mais pode ser demitida. Sobre estabilidade, é correto:",["Nunca pode ser demitida","Tem estabilidade, mas pode perder cargo por sentença, processo administrativo ou avaliação periódica","Só após 5 anos","Estabilidade é vitaliciedade"],1],
 ["Guarda municipal fechou bar de Pedro sem lei que permitisse. Sobre poder de polícia, é correto:",["É ilimitado","É limitado pela lei e proporcionalidade","Só União tem","Não pode ser questionado"],1],
 ["Congresso quer emenda para acabar com separação dos Poderes. Sobre emenda, é correto:",["Pode","Não pode abolir cláusulas pétreas: forma federativa, voto direto, separação dos Poderes, direitos e garantias","Pode se tiver 3/5","Pode se Presidente quiser"],1],
 ["Jornalista Ana criticou prefeito em matéria. Prefeito mandou censurar jornal. Sobre liberdade de expressão, é correto:",["Não existe","É garantida, vedado anonimato, mas não é absoluta, vedada censura prévia","Pode censurar","Só jornalista tem"],1],
 ["Polícia entrou de madrugada na casa de João, sem ordem e sem flagrante, para procurar arma. Sobre casa, é correto:",["Pode entrar","É asilo inviolável, só com consentimento, flagrante, desastre, socorro ou ordem judicial durante o dia","Pode entrar à noite","Não tem proteção"],1],
 ["Popular viu João furtando e segurou até polícia chegar. Sobre flagrante, é correto:",["Só polícia pode","Qualquer do povo pode prender quem for encontrado em flagrante","Só juiz","Popular não pode"],1],
-["Cidadão Carlos viu Prefeitura pagar R$ 5 milhões por obra de R$ 500 mil. Sobre ação popular, é correto:",["Só político","Qualquer cidadão pode propor para anular ato lesivo ao patrimônio público","Exige custas altas","Só brasileiro nato"],1],
+["Cidadão Carlos viu Prefeitura pagar 5 milhões por obra de 500 mil. Sobre ação popular, é correto:",["Só político","Qualquer cidadão pode propor para anular ato lesivo ao patrimônio público","Exige custas altas","Só brasileiro nato"],1],
 ["Maria quer saber dados dela no banco do INSS, negados. Sobre habeas data, é correto:",["Para liberdade","Para assegurar conhecimento de informações relativas ao impetrante em bancos de dados públicos","Para anular ato","Não existe"],1],
 ["Pedro tem direito líquido e certo à aposentadoria, provado por documento, negado pelo INSS. Sobre mandado de segurança, é correto:",["Contra lei em tese","Exige direito líquido e certo, não amparado por HC ou HD, prazo 120 dias","A qualquer tempo","Não cabe contra autoridade"],1],
 ["Lei estadual parece inconstitucional. Sobre ADI, é correto:",["Qualquer pessoa","Só legitimados do art. 103 CF, controle concentrado no STF","Só juiz","Não existe"],1],
@@ -68,10 +68,10 @@ const Q=[
 ["Pais brigam pela guarda de Lucas, 5 anos. Sobre guarda, é correto:",["Só mãe","Compartilhada é regra, mesmo com divergência","Só pai","Para avó"],1],
 ["Antônio morreu deixando filho do casamento e filho fora do casamento. Sobre filiação, é correto:",["Filho fora não herda","Todos filhos iguais, vedada discriminação","Só filho do casamento","Adotivo não herda"],1],
 ["Paulo morreu sem testamento, deixando filho e pai. Quem herda?",["Pai","Filho, descendente prefere ascendente","Cônjuge","Colateral"],1],
-["Joana tem um filho e quer deixar tudo para amiga em testamento. Sobre testamento, é correto:",["Pode deixar tudo","Só pode dispor de 50%, outra metade é legítima","Não pode testar","Só para filho"],1],
+["Joana tem um filho e quer deixar tudo para amiga em testamento. Sobre testamento, é correto:",["Pode deixar tudo","Só pode dispor de 50 por cento, outra metade é legítima","Não pode testar","Só para filho"],1],
 ["Pedro mora há 16 anos em terreno sem oposição, sem título. Sobre usucapião extraordinária, é correto:",["5 anos e título","15 anos de posse ininterrupta, sem oposição, independente de título e boa-fé","2 anos","Só rural"],1],
 ["Loja vendeu geladeira com defeito para Maria. Sobre vício, é correto:",["Maria sem direito","Fornecedor responde solidariamente, 30 dias para sanar, sob pena de troca ou devolução","Só fabricante","Maria fica com defeito"],1],
-["Lucas, 15 anos, assinou sozinho contrato de R$ 20 mil para comprar moto. Sobre negócio jurídico, é correto:",["Válido","Nulo ou anulável, exige agente capaz, objeto lícito e forma legal","Válido se quiser","Não precisa capacidade"],1],
+["Lucas, 15 anos, assinou sozinho contrato de 20 mil para comprar moto. Sobre negócio jurídico, é correto:",["Válido","Nulo ou anulável, exige agente capaz, objeto lícito e forma legal","Válido se quiser","Não precisa capacidade"],1],
 ["Fernanda emprestou celular para Ana, que vendeu. Sobre posse, é correto:",["Fernanda perdeu","Posse é exercício de fato de poder inerente à propriedade, defendida por interditos","Sem proteção","Só dono tem"],1],
 ["Túlio pegou relógio na loja sem pagar, sem violência, e saiu correndo. Sobre crime, é:",["Roubo","Furto, subtrair coisa alheia móvel sem violência","Não é crime","Estelionato"],1],
 ["Alfredo com faca exigiu dinheiro da caixa do banco, ameaçando matar. Sobre crime, é:",["Furto","Roubo, subtrair mediante grave ameaça ou violência","Não é crime","Furto qualificado"],1],
@@ -84,15 +84,15 @@ const Q=[
 ["Delegado ouviu testemunhas no inquérito sem advogado do suspeito. Sobre inquérito, é correto:",["Processo judicial","Procedimento administrativo, inquisitorial, sigiloso","Público","Não pode arquivar"],1],
 ["Polícia gravou conversa sem autorização judicial. Sobre prova ilícita, é correto:",["Admitida","Inadmissível, deve ser desentranhada","Pode usar","Só para defesa"],1],
 ["João matou Pedro com faca, querendo matar. Quem julga? Sobre Júri, é correto:",["Juiz sozinho","Tribunal do Júri, crimes dolosos contra a vida","Juizado","Turma"],1],
-["Maria trabalha em banco 8h/dia, 44h/semana. Sobre jornada, é correto:",["Ilegal","Jornada normal CLT e CF, 8h diárias e 44h semanais","Deveria ser 6h","Sem limite"],1],
+["Maria trabalha em banco 8h por dia, 44h por semana. Sobre jornada, é correto:",["Ilegal","Jornada normal CLT e CF, 8h diárias e 44h semanais","Deveria ser 6h","Sem limite"],1],
 ["Pedro trabalha na padaria sem carteira, contrato verbal. Sobre contrato de trabalho, é correto:",["Nulo","Pode ser verbal ou escrito, determinado ou indeterminado","Não pode verbal","Exige cartório"],1],
-["Ana trabalhou ano todo em 2023. Sobre 13º, é correto:",["Não existe","Gratificação natalina, 1/12 por mês, 2 parcelas","Só servidor","Só 1 ano"],1],
+["Ana trabalhou ano todo em 2023. Sobre 13o, é correto:",["Não existe","Gratificação natalina, 1/12 por mês, 2 parcelas","Só servidor","Só 1 ano"],1],
 ["Carlos completou 12 meses e quer férias. Sobre férias, é correto:",["15 dias","30 dias, com 1/3, após 12 meses","Sem férias","Só doméstico"],1],
-["Empresa não deposita FGTS de João há 6 meses. Sobre FGTS, é correto:",["Pago pelo empregado","Empregador deposita 8%","Opcional","Só servidor"],1],
+["Empresa não deposita FGTS de João há 6 meses. Sobre FGTS, é correto:",["Pago pelo empregado","Empregador deposita 8 por cento","Opcional","Só servidor"],1],
 ["Maria demitida sem justa causa após 5 anos. Sobre aviso prévio, é correto:",["Sem aviso","Proporcional, mínimo 30 dias, acréscimo por ano","Fixo 90 dias","Não existe"],1],
 ["João quer processar empresa por horas extras. Onde? Sobre Justiça do Trabalho, é correto:",["Federal","Justiça do Trabalho, ações da relação de trabalho","Estadual","Juizado"],1],
 ["Advogado perdeu prazo de recurso ordinário trabalhista. Sobre prazo, é correto:",["5 dias","8 dias","15 dias","30 dias"],1],
-["Ana quer propor ação de cobrança de R$ 10 mil. Sobre petição inicial, deve conter:",["Só nome","Juízo, partes, fato, fundamento, pedido, valor, provas, audiência","Só pedido","Só endereço"],1],
+["Ana quer propor ação de cobrança de 10 mil. Sobre petição inicial, deve conter:",["Só nome","Juízo, partes, fato, fundamento, pedido, valor, provas, audiência","Só pedido","Só endereço"],1],
 ["Pedro citado não apresentou defesa. Sobre citação, é correto:",["Não necessária","Citação convoca réu, falta de defesa pode gerar revelia","Só edital","Não pode eletrônica"],1],
 ["Juiz deu sentença sem fundamentar. Sobre sentença, é correto:",["Válida","Deve ser fundamentada, sob pena de nulidade","Pode ser oral","Sem relatório"],1],
 ["Maria ganhou ação, transitou em julgado, João quer discutir de novo. Sobre coisa julgada, é correto:",["Pode sempre","Torna imutável decisão de mérito não mais sujeita a recurso","Só penal","Não existe no civil"],1],
@@ -106,7 +106,7 @@ const Q=[
 ["Loja vendeu a prazo, emitiu duplicata, Pedro não pagou. Sobre duplicata, é correto:",["Não é título","Título causal de compra e venda ou serviços, pode ser protestada","Não pode protestar","Só pessoa física"],1],
 ["Maria comprou celular pela internet com defeito. Sobre CDC, consumidor é:",["Só loja","Quem adquire ou utiliza como destinatário final","Só pessoa física","Só rico"],1],
 ["Pedro comprou geladeira que estragou em 10 dias. Sobre vício, é correto:",["Sem direito","Fornecedor responde solidariamente, 30 dias para sanar","Só fabricante","Fica com defeito"],1],
-["Ana comprou curso online, arrependeu em 3 dias. Sobre arrependimento, é correto:",["Não existe","7 dias para contratação fora do estabelecimento, com devolução","30 dias qualquer","Só acima de R$ 1.000"],1],
+["Ana comprou curso online, arrependeu em 3 dias. Sobre arrependimento, é correto:",["Não existe","7 dias para contratação fora do estabelecimento, com devolução","30 dias qualquer","Só acima de 1.000"],1],
 ["Lucas, 10 anos, furtou bicicleta. Sobre ECA, criança é:",["Até 18","Até 12 incompletos, adolescente 12 a 18","Até 21","Até 16"],1],
 ["Adolescente 15 anos roubou celular. Sobre ato infracional, é correto:",["Preso como adulto","Pode cumprir medida socioeducativa, inclusive internação","Sem medida","Só advertência"],1],
 ["José, 65 anos, desrespeitado na fila. Sobre Estatuto do Idoso, idoso é:",["Acima de 50","60 ou mais, com prioridade","Acima de 70","Só aposentado"],1],
@@ -117,7 +117,7 @@ const Q=[
 ["Templo foi cobrado IPTU. Sobre imunidade, é correto:",["É isenção","Limitação constitucional ao poder de tributar, como para templos","Por lei ordinária","Não existe para templo"],1],
 ["Loja vendeu mercadoria para outro Estado. Sobre ICMS, é correto:",["Municipal","Estadual, sobre circulação de mercadorias e serviços","Federal","Só importação"],1],
 ["Empresa prestou consultoria. Sobre ISS, é correto:",["Estadual","Municipal, sobre serviços","Federal","Não incide"],1],
-["João recebeu salário de R$ 10 mil e não pagou IR. Sobre IR, é correto:",["Estadual","Federal, sobre renda e proventos","Municipal","Não incide sobre salário"],1],
+["João recebeu salário de 10 mil e não pagou IR. Sobre IR, é correto:",["Estadual","Federal, sobre renda e proventos","Municipal","Não incide sobre salário"],1],
 ["Maria herdou casa da mãe e foi cobrada ITCMD. Sobre ITCMD, é correto:",["Federal","Estadual, sobre transmissão causa mortis e doação","Municipal","Não incide sobre doação"],1],
 ["Pedro dono de apartamento na cidade. Sobre IPTU, é correto:",["Estadual","Municipal, sobre propriedade urbana","Federal","Só rural"],1],
 ["Carlos tem carro e foi cobrado IPVA. Sobre IPVA, é correto:",["Municipal","Estadual, sobre veículos","Federal","Não existe"],1],
@@ -126,24 +126,24 @@ const Q=[
 ];
 let atual=0, acertos=0, respondidas=new Set();
 function mostrar(){
-document.getElementById('qnum').innerText=`Questão ${atual+1} de ${Q.length}`;
+document.getElementById('qnum').innerText="Questão " + (atual+1) + " de " + Q.length;
 document.getElementById('pergunta').innerText=Q[atual][0];
-document.getElementById('prog').style.width=((atual+1)/Q.length*100)+'%';
-const div=document.getElementById('opcoes'); div.innerHTML='';
-Q[atual][1].forEach((alt,i)=>{
-const d=document.createElement('div'); d.className='opcao'; d.innerText=String.fromCharCode(65+i)+") "+alt;
-d.onclick=()=>{ if(d.dataset.ok) return; d.dataset.ok=1;
+document.getElementById('prog').style.width=((atual+1)/Q.length*100)+"%";
+var div=document.getElementById('opcoes'); div.innerHTML='';
+Q[atual][1].forEach(function(alt,i){
+var d=document.createElement('div'); d.className='opcao'; d.innerText=String.fromCharCode(65+i)+") "+alt;
+d.onclick=function(){ if(d.dataset.ok) return; d.dataset.ok=1;
 if(i===Q[atual][2]){ d.classList.add('certa'); if(!respondidas.has(atual)){acertos++; respondidas.add(atual);} }
 else{ d.classList.add('errada'); div.children[Q[atual][2]].classList.add('certa'); respondidas.add(atual); }
-document.getElementById('acertos').innerText=`Acertos: ${acertos}`;
-if(respondidas.size===Q.length) document.getElementById('final').innerText=`Fim! Você acertou ${acertos} de ${Q.length} 🎉`;
+document.getElementById('acertos').innerText="Acertos: "+acertos;
+if(respondidas.size===Q.length) document.getElementById('final').innerText="Fim! Você acertou "+acertos+" de "+Q.length;
 };
 div.appendChild(d);
 });
 }
 function proxima(){ if(atual<Q.length-1){atual++; mostrar();} }
 function anterior(){ if(atual>0){atual--; mostrar();} }
-function irPara(){ let v=parseInt(document.getElementById('irInput').value); if(v>=1 && v<=Q.length){atual=v-1; mostrar();} }
+function irPara(){ var v=parseInt(document.getElementById('irInput').value); if(v>=1 && v<=Q.length){atual=v-1; mostrar();} }
 mostrar();
 </script>
 </body>
