@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exame 37 - Simulado OAB</title>
+<style>
+*{box-sizing:border-box} body{background:#f1f5f9;font-family:Arial;margin:0;padding:15px}
+.box{max-width:750px;margin:auto;background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 10px #0001}
+.top{display:flex;justify-content:space-between;font-weight:bold;color:#1e3a5f}
+h2{text-align:center;color:#1e3a5f;margin:10px 0 2px}
+.fonte{text-align:center;color:#64748b;font-size:13px;margin:0 0 10px}
+.busca{display:flex;gap:8px;margin:10px 0}
+.busca input{flex:1;padding:12px;border:1px solid #ccc;border-radius:8px}
+.busca button{background:#1e3a5f;color:#fff;border:none;padding:0 18px;border-radius:8px;font-weight:bold;cursor:pointer}
+.bar{height:8px;background:#e2e8f0;border-radius:10px;overflow:hidden;margin:8px 0}
+.bar div{height:100%;background:#22c55e;width:0%}
+.qnum{font-weight:bold;margin:12px 0}
+.pergunta{background:#eef6ff;border-left:5px solid #1e3a5f;padding:16px;border-radius:8px;line-height:1.6}
+.opcao{border:1px solid #ddd;padding:14px;border-radius:10px;margin:10px 0;cursor:pointer;background:#fff}
+.opcao:hover{background:#f8fafc}
+.certa{background:#dcfce7!important;border-color:#22c55e!important}
+.errada{background:#fee2e2!important;border-color:#ef4444!important}
+.nav{display:flex;justify-content:space-between;margin-top:15px}
+.nav button{background:#1e3a5f;color:#fff;border:none;padding:12px 20px;border-radius:8px;cursor:pointer}
+.final{text-align:center;font-size:20px;font-weight:bold;color:#1e3a5f;margin-top:15px}
+.voltar{display:block;text-align:center;margin-top:15px;color:#1e3a5f}
+</style>
+</head>
+<body>
+<div class="box">
+<div class="top"><span>Exame 37 - Simulado OAB</span><span id="acertos">Acertos: 0</span></div>
+<h2>Simulado Estilo FGV - Interpretação</h2>
+<p class="fonte">Fonte: FGV - XXXVII Exame de Ordem Unificado - 2023</p>
+<div class="busca"><input id="irInput" type="number" min="1" max="80" placeholder="Ir para questão (1-80)"><button onclick="irPara()">Ir ➜</button></div>
+<div class="bar"><div id="prog"></div></div>
+<div class="qnum" id="qnum">Questão 1 de 80</div>
+<div class="pergunta" id="pergunta"></div>
+<div id="opcoes"></div>
+<div class="nav"><button onclick="anterior()">⬅ Anterior</button><button onclick="proxima()">Próxima ➜</button></div>
+<div class="final" id="final"></div>
+<a class="voltar" href="index.html">⬅ Voltar para o Menu</a>
+</div>
+<script>
+const Q=[
+["Advogada Maria atua em causa própria e também representa seu cliente em processo. Sobre honorários de sucumbência, é correto:",["Não tem direito por atuar em causa própria","Tem direito a honorários de sucumbência, pois atua como advogada","Só tem se for sócia","Não pode cobrar"],1],
+["João, advogado, foi contratado para atuar em processo, mas renunciou ao mandato sem comunicar o cliente. É correto:",["Pode renunciar sem comunicar","Deve comunicar e continuar por 10 dias, salvo acordo","Não pode renunciar nunca","Renúncia é automática"],1],
+["Sobre o sigilo profissional do advogado, é correto:",["Não existe","É dever, salvo grave ameaça ao direito à vida e à honra ou quando ele próprio for acusado","Pode revelar tudo","Só para processo penal"],1],
+["Sobre a publicidade da advocacia, é correto:",["Pode fazer mercantilização","É permitida, desde que sóbria, sem mercantilização, captação de clientela ou ostentação","Pode prometer resultado","Pode usar foto de cliente sem autorização"],1],
+["Sobre o Exame de Ordem, é correto:",["Não é obrigatório","É obrigatório para inscrição como advogado, salvo hipóteses legais","Só para bacharéis de faculdade pública","Pode ser dispensado por idade"],1],
+["Município X desapropriou imóvel de Paulo para construir escola, sem pagar indenização prévia. É correto:",["É constitucional","É inconstitucional, exige prévia e justa indenização em dinheiro","Pode pagar depois","Pode pagar em títulos sempre"],1],
+["Sobre a Lei de Improbidade, após Lei 14.230/21, é correto:",["Basta culpa","Exige dolo para todas as modalidades","Não exige dolo","Não há sanção"],1],
+["Sobre o poder de polícia, é correto:",["É ilimitado","É limitado pela lei, proporcionalidade e direitos fundamentais","Só para Município","Não pode ser delegado"],1],
+["Sobre a concessão de serviço público, é correto:",["Não há licitação","Exige licitação na modalidade concorrência ou diálogo competitivo","Pode ser sem licitação","Só para União"],1],
+["Sobre o pregão, é correto:",["Só para obras","É para aquisição de bens e serviços comuns","Não existe mais","Só presencial"],1],
+["Sobre o concurso público, é correto:",["Não precisa de edital","Exige edital, com regras claras e isonomia","Pode ser por indicação","Não precisa de prova"],1],
+["Sobre a estabilidade do servidor, é correto:",["Após 1 ano","Após 3 anos de efetivo exercício e aprovação em estágio probatório","Após 5 anos","Não existe"],1],
+["Sobre o mandado de injunção, é correto:",["Cabe quando falta norma que inviabiliza direito constitucional","Cabe contra lei em tese","Não existe","Só para STF"],0],
+["Sobre o habeas data, é correto:",["Cabe para proteger liberdade","Cabe para assegurar conhecimento de informações relativas ao impetrante em bancos de dados públicos","Cabe para anular ato","Não existe"],1],
+["Sobre a ADPF, é correto:",["Cabe contra qualquer ato","Cabe para evitar ou reparar lesão a preceito fundamental resultante de ato do Poder Público","Só para lei federal","Não existe"],1],
+["Sobre a emenda constitucional, é correto:",["Pode abolir direitos fundamentais","Não pode abolir cláusulas pétreas: forma federativa, voto direto, separação dos Poderes, direitos e garantias individuais","Pode ser feita por MP","Não precisa de quórum"],1],
+["Sobre o direito de propriedade, art. 5º XXII CF, é correto:",["É absoluto","Deve atender sua função social","Não pode ser desapropriado","Só para brasileiro"],1],
+["Sobre a liberdade de expressão, é correto:",["É absoluta","É garantida, vedado anonimato, com limites legais","Não existe","Só para jornalista"],1],
+["Sobre a prisão em flagrante, é correto:",["Só juiz pode prender","Qualquer do povo pode prender quem for encontrado em flagrante delito","Só polícia","Não existe"],1],
+["Sobre a casa, art. 5º XI CF, é correto:",["Pode entrar a qualquer hora","É asilo inviolável, ninguém pode penetrar sem consentimento, salvo flagrante, desastre, socorro ou ordem judicial durante o dia","Pode entrar à noite sem ordem","Não tem proteção"],1],
+["Sobre o contrato de doação, é correto:",["É oneroso","É gratuito, por liberalidade","Não pode ser revogado","Não exige aceitação"],1],
+["Sobre a compra e venda, é correto:",["É real","É consensual, bilateral e oneroso","Só verbal","Não gera obrigação"],1],
+["Sobre a locação residencial, o prazo para desocupação após notificação é:",["15 dias","30 dias","90 dias","1 ano"],1],
+["Sobre a usucapião, é correto:",["Só para imóvel rural","É modo de aquisição da propriedade pela posse prolongada","Não existe","Só para bem móvel"],1],
+["Sobre o casamento, é correto:",["Só religioso","É civil, com comunhão parcial como regime legal","Não há regime","Só para maiores de 21"],1],
+["Sobre a guarda, é correto:",["Só unilateral","A compartilhada é regra, mesmo com divergência","Não existe","Só para mãe"],1],
+["Sobre a filiação, é correto:",["Filho fora do casamento não tem direito","Todos os filhos são iguais, vedada discriminação","Só filho adotivo tem direito","Filho de criação não tem direito"],1],
+["Sobre a responsabilidade civil, é correto:",["Só por dolo","Pode ser subjetiva ou objetiva, conforme lei","Não há dano moral","Só para pessoa física"],1],
+["Sobre o dano moral, é correto:",["Não existe","É indenizável, decorrente de violação a direito da personalidade","Só para rico","Não precisa provar"],1],
+["Sobre o negócio jurídico, é correto:",["Não precisa de agente capaz","Exige agente capaz, objeto lícito, possível e determinado, forma prescrita ou não defesa em lei","Pode ser ilícito","Não precisa de vontade"],1],
+["Sobre o furto, art. 155 CP, é correto:",["Exige violência","É subtrair coisa alheia móvel para si ou para outrem","Só à noite","Não tem qualificado"],1],
+["Sobre o roubo, art. 157 CP, é correto:",["Não exige violência","É subtrair coisa mediante grave ameaça ou violência","É igual a furto","Não tem aumento"],1],
+["Sobre o homicídio, é correto:",["Só culposo","Pode ser doloso ou culposo, com qualificadoras","Não tem pena","Só para maior"],1],
+["Sobre a legítima defesa, é correto:",["Permite vingança","Exige agressão injusta, atual ou iminente, uso moderado de meios necessários","Não exige agressão","Permite excesso"],1],
+["Sobre o estado de necessidade, é correto:",["Não existe","É salvar direito próprio ou alheio de perigo atual, que não provocou","Só para patrimônio","Não exclui ilicitude"],1],
+["Sobre a tentativa, é correto:",["Não é punida","É punida com pena do crime consumado diminuída de 1/3 a 2/3","É punida igual","Não existe"],1],
+["Sobre o concurso de pessoas, é correto:",["Só autor responde","Quem concorre para o crime incide nas penas, na medida de sua culpabilidade","Só partícipe","Não há concurso"],1],
+["Sobre a prescrição, é correto:",["Não existe no penal","Extingue punibilidade pelo decurso do tempo","Só para crime leve","Não pode ser reconhecida de ofício"],1],
+["Sobre o inquérito policial, é correto:",["É processo judicial","É procedimento administrativo, inquisitorial","É público","Não pode ser arquivado"],1],
+["Sobre a prova ilícita, é correto:",["É admitida","É inadmissível, devendo ser desentranhada","Pode ser usada","Só para defesa"],1],
+["Sobre o Tribunal do Júri, é correto:",["Julga todos os crimes","Julga crimes dolosos contra a vida","Não tem soberania","É composto por 3 jurados"],1],
+["Sobre a CLT, jornada normal é:",["6h","8h diárias e 44h semanais","12h","10h"],1],
+["Sobre o contrato de trabalho, é correto:",["Só escrito","Pode ser verbal ou escrito, por prazo determinado ou indeterminado","Não pode ser verbal","Exige cartório"],1],
+["Sobre o 13º salário, é correto:",["Não existe","É gratificação natalina, 1/12 por mês trabalhado","Só para servidor","Só para quem tem 1 ano"],1],
+["Sobre as férias, é correto:",["30 dias após 12 meses, com 1/3 constitucional","15 dias","Não tem","Só para empregado doméstico"],0],
+["Sobre o FGTS, é correto:",["É pago pelo empregado","Empregador deposita 8%","É opcional","Só para servidor"],1],
+["Sobre a rescisão, é correto:",["Não há aviso prévio","Aviso prévio proporcional, mínimo 30 dias","É fixo 90 dias","Não existe"],1],
+["Sobre a Justiça do Trabalho, é correto:",["Julga crimes","Julga ações da relação de trabalho","Só dissídio coletivo","Não julga servidor"],1],
+["Sobre o recurso ordinário trabalhista, prazo é:",["5 dias","8 dias","15 dias","30 dias"],1],
+["Sobre a petição inicial, CPC, deve conter:",["Só nome do autor","Juízo, partes, fato, fundamento, pedido, valor, provas, opção por audiência","Só pedido","Só endereço"],1],
+["Sobre a citação, é correto:",["Não é necessária","É ato que convoca réu para integrar processo","Só por edital","Não pode ser eletrônica"],1],
+["Sobre a sentença, é correto:",["Não precisa fundamentar","Deve ser fundamentada, sob pena de nulidade","Pode ser oral sem registro","Não precisa relatório"],1],
+["Sobre a coisa julgada, é correto:",["Pode ser revista sempre","Torna imutável decisão de mérito não mais sujeita a recurso","Só penal","Não existe no civil"],1],
+["Sobre a tutela de urgência, é correto:",["Só após sentença","Pode ser concedida liminarmente, com probabilidade do direito e perigo de dano","Não existe","Só para réu"],1],
+["Sobre o agravo de instrumento, prazo é:",["5 dias","15 dias","8 dias","30 dias"],1],
+["Sobre a apelação, é correto:",["Não tem efeito","Tem efeito devolutivo e suspensivo, em regra","Só devolutivo","Não cabe contra sentença"],1],
+["Sobre a execução, é correto:",["Só para título judicial","Pode ser para título judicial ou extrajudicial","Não há penhora","Não há defesa"],1],
+["Sobre a falência, é correto:",["Só pessoa física","É execução coletiva do empresário devedor","Não tem administrador","Não abrange trabalhista"],1],
+["Sobre a recuperação judicial, é correto:",["Só para falido","Permite superar crise, com plano aprovado","Não tem juiz","Não suspende execução"],1],
+["Sobre o cheque, é correto:",["É promessa","É ordem de pagamento à vista","Não pode ser endossado","Prescreve em 1 dia"],1],
+["Sobre a duplicata, é correto:",["Não é título","É título causal de compra e venda mercantil ou serviços","Não pode ser protestada","Só pessoa física"],1],
+["Sobre o CDC, consumidor é:",["Só quem compra","Quem adquire ou utiliza produto ou serviço como destinatário final","Só pessoa física","Só rico"],1],
+["Sobre o vício do produto, CDC, é correto:",["Fornecedor não responde","Fornecedor responde solidariamente, 30 dias para sanar","Só fabricante","Não pode trocar"],1],
+["Sobre o arrependimento, CDC, é:",["Não existe","7 dias para contratação fora do estabelecimento","30 dias para qualquer compra","Só online acima de 1000"],1],
+["Sobre o ECA, criança é:",["Até 18","Até 12 anos incompletos","Até 21","Até 16"],1],
+["Sobre o ato infracional, é correto:",["Criança pode ser internada","Adolescente pode cumprir medida socioeducativa","Não há medida","Só advertência"],1],
+["Sobre o Estatuto do Idoso, idoso é:",["Acima de 50","60 anos ou mais","Acima de 70","Só aposentado"],1],
+["Sobre a Lei Maria da Penha, é correto:",["Só casada","Protege mulher em violência doméstica e familiar","Não tem medida protetiva","Só física"],1],
+["Sobre o meio ambiente, art. 225 CF, é correto:",["Não é direito","Todos têm direito ao meio ambiente ecologicamente equilibrado","Só Poder Público","Não há dever de reparar"],1],
+["Sobre a ordem econômica, art. 170 CF, é fundada em:",["Só lucro","Valorização do trabalho humano e livre iniciativa","Só Estado","Só propriedade"],1],
+["Sobre o lançamento tributário, é correto:",["Facultativo","Procedimento que verifica fato gerador, determina matéria, calcula montante","Só IPTU","Não pode ser revisto"],1],
+["Sobre a imunidade tributária, é correto:",["É isenção","É limitação constitucional ao poder de tributar","Pode ser por lei ordinária","Não existe para templo"],1],
+["Sobre o ICMS, é correto:",["Municipal","Estadual, sobre circulação de mercadorias e serviços","Federal","Só importação"],1],
+["Sobre o ISS, é correto:",["Estadual","Municipal, sobre serviços","Federal","Não incide"],1],
+["Sobre o IR, é correto:",["Estadual","Federal, sobre renda e proventos","Municipal","Não incide sobre salário"],1],
+["Sobre o ITCMD, é correto:",["Federal","Estadual, sobre transmissão causa mortis e doação","Municipal","Não incide sobre doação"],1],
+["Sobre o IPTU, é correto:",["Estadual","Municipal, sobre propriedade urbana","Federal","Só rural"],1],
+["Sobre o IPVA, é correto:",["Municipal","Estadual, sobre veículos automotores","Federal","Não existe"],1],
+["Sobre a prescrição tributária, prazo para cobrar é:",["2 anos","5 anos","10 anos","1 ano"],1],
+["Sobre a sucessão, ordem é:",["Colaterais primeiro","Descendentes, ascendentes, cônjuge, colaterais","Cônjuge primeiro","Ascendentes primeiro"],1]
+];
+let atual=0, acertos=0, respondidas=new Set();
+function mostrar(){
+document.getElementById('qnum').innerText=`Questão ${atual+1} de ${Q.length}`;
+document.getElementById('pergunta').innerText=Q[atual][0];
+document.getElementById('prog').style.width=((atual+1)/Q.length*100)+'%';
+const div=document.getElementById('opcoes'); div.innerHTML='';
+Q[atual][1].forEach((alt,i)=>{
+const d=document.createElement('div'); d.className='opcao'; d.innerText=String.fromCharCode(65+i)+") "+alt;
+d.onclick=()=>{ if(d.dataset.ok) return; d.dataset.ok=1;
+if(i===Q[atual][2]){ d.classList.add('certa'); if(!respondidas.has(atual)){acertos++; respondidas.add(atual);} }
+else{ d.classList.add('errada'); div.children[Q[atual][2]].classList.add('certa'); respondidas.add(atual); }
+document.getElementById('acertos').innerText=`Acertos: ${acertos}`;
+if(respondidas.size===Q.length) document.getElementById('final').innerText=`Fim! Você acertou ${acertos} de ${Q.length} 🎉`;
+};
+div.appendChild(d);
+});
+}
+function proxima(){ if(atual<Q.length-1){atual++; mostrar();} }
+function anterior(){ if(atual>0){atual--; mostrar();} }
+function irPara(){ let v=parseInt(document.getElementById('irInput').value); if(v>=1 && v<=Q.length){atual=v-1; mostrar();} }
+mostrar();
+</script>
+</body>
+</html>
