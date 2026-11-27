@@ -5,56 +5,54 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EXAME 36 - MORTAL GOL OAB</title>
 <style>
-body{background:#0a0a0a;color:#fff;font-family:Arial;padding:20px;max-width:700px;margin:auto}
+body{background:#0a0a0a;color:#fff;font-family:Arial;padding:20px;max-width:750px;margin:auto}
 h1{color:#22ff88;text-align:center}
 .topo{text-align:center;color:#ccc}
-.card{background:#1a1a1a;border:1px solid #333;padding:15px;border-radius:12px;margin:15px 0}
+.card{background:#1a1a1a;border:1px solid #333;padding:16px;border-radius:12px;margin:15px 0}
 button{display:block;width:100%;text-align:left;background:#222;color:#fff;border:1px solid #444;padding:12px;margin:6px 0;border-radius:8px;cursor:pointer}
 button:hover{background:#333}
 .certa{background:#14532d!important;border-color:#22ff88!important}
 .errada{background:#7f1d1d!important}
 #resultado{text-align:center;font-size:22px;font-weight:bold;margin:20px;color:#22ff88}
 .btn-final{background:#22ff88;color:#000;font-weight:bold;text-align:center;padding:15px;border-radius:10px;text-decoration:none;display:block;margin-top:20px}
+.materia{color:#22ff88;font-size:12px;font-weight:bold}
 </style>
 </head>
 <body>
 <h1>⚽ MORTAL GOL OAB</h1>
-<p class="topo"><b>EXAME 36</b> - Simulado Estilo FGV<br>10 Questões - Treino Rápido</p>
+<p class="topo"><b>EXAME 36 - XXXVI Exame de Ordem</b><br>Questões Oficiais FGV - 1ª Fase<br>20 Questões Reais</p>
 <div id="quiz"></div>
 <div id="resultado"></div>
 <a class="btn-final" href="index.html">⬅ VOLTAR PARA O MENU</a>
-
 <script>
-const questoes=[
-{q:"1. Sobre os direitos fundamentais, é correto afirmar que:",o:["São absolutos e ilimitados","Podem sofrer limitações em caso de colisão com outros direitos","Só valem para brasileiros natos","Não se aplicam às relações privadas"],c:1},
-{q:"2. No Direito Penal, o princípio da legalidade significa que:",o:["O juiz pode criar crimes por analogia","Não há crime sem lei anterior que o defina","A pena pode ser aplicada retroativamente sempre","O costume pode criar crime"],c:1},
-{q:"3. Sobre o contrato de compra e venda no Código Civil, é correto:",o:["É sempre gratuito","Exige sempre escritura pública","É bilateral e oneroso, em regra","Não gera obrigação para as partes"],c:2},
-{q:"4. No processo civil, a petição inicial deve indicar, entre outros:",o:["Apenas o nome do autor","O juízo, as partes, o pedido e o valor da causa","Apenas a sentença que se espera","Somente o endereço do réu"],c:1},
-{q:"5. Sobre o habeas corpus, é correto afirmar:",o:["Serve para proteger direito de locomoção","Serve para discutir dívida de aluguel","Só pode ser impetrado por advogado","Não é cabível contra ato de autoridade"],c:0},
-{q:"6. No Direito do Trabalho, a jornada normal é de:",o:["6 horas diárias e 36 semanais","8 horas diárias e 44 semanais","10 horas diárias e 50 semanais","12 horas diárias sem limite"],c:1},
-{q:"7. Sobre o Direito Administrativo, o ato administrativo possui como atributos:",o:["Presunção de legitimidade, imperatividade e autoexecutoriedade","Apenas a moralidade","Somente a publicidade","Não possui nenhum atributo"],c:0},
-{q:"8. No Direito Constitucional, a CF/88 estabelece que a República Federativa do Brasil tem como fundamento:",o:["A livre iniciativa e a pluralidade política","A soberania, cidadania, dignidade da pessoa humana, valores sociais do trabalho e pluralismo político","Apenas a soberania","Somente o voto indireto"],c:1},
-{q:"9. Sobre a responsabilidade civil, é necessário em regra:",o:["Apenas a conduta","Conduta, dano, nexo causal e culpa/dolo","Somente o dano","Apenas a intenção"],c:1},
-{q:"10. O recurso cabível contra sentença no processo civil é:",o:["Habeas Corpus","Apelação","Mandado de Segurança","Recurso Especial apenas"],c:1},
+const q=[
+{mat:"ÉTICA - Q1",q:"Celso, advogado, foi contratado por Maria, servidora pública, para ajuizar ação com pedido de pagamento de gratificação. Contrato prevê que Celso só receberá honorários caso a demanda seja exitosa, em percentual do proveito econômico. É correto afirmar que:",o:["Os honorários contratuais não poderão incidir sobre o valor das parcelas vincendas","Os honorários foram pactuados de forma correta, já que deveriam ser necessariamente representados por pecúnia","Os honorários não podem ser superiores às vantagens advindas a favor de Maria, exceto se acrescidos aos de sucumbência","Os honorários contratuais não poderão incidir sobre o valor das parcelas vencidas"],c:2},
+{mat:"CONSTITUCIONAL - Q11",q:"Roberto, cidadão brasileiro, soube que órgão público federal está contratando empreiteira sem licitação. Quer ajuizar Ação Popular para anular e buscar ressarcimento. Se não obtiver sucesso, quanto a custas e sucumbência:",o:["Não terá que arcar com custas e sucumbência, pois move-se por boa-fé em defesa do interesse público","Somente terá que arcar com custas, mas não sucumbência","Terá que arcar com custas e sucumbência, como ocorre ordinariamente","Não terá nenhum custo, pois a CF isenta custas em todos os remédios constitucionais"],c:0},
+{mat:"CONSTITUCIONAL",q:"Dois Estados foram atingidos por chuvas, calamidade de grandes proporções. Presidente, após ouvir Conselho da República e Defesa Nacional, decretou estado de defesa, indicando ocupação e uso temporário de bens e serviços públicos dos Estados, sem ressarcimento. Segundo a CF:",o:["Houve violação ao princípio federativo","A medida é constitucional, pois estado de defesa dá poderes amplos por 90 dias","A medida viola a ordem constitucional, pois a União deve responder pelos danos e custos decorrentes","Só seria constitucional com autorização prévia das duas casas do Congresso"],c:2},
+{mat:"ADMINISTRATIVO - Q31",q:"Município Alfa está construindo ponte e precisa utilizar terreno não edificado de Fernando, vizinho à obra, enquanto perdurar atividade de interesse público, sem perigo iminente. A Administração deve:",o:["Realizar tombamento, mediante prévia e justa indenização","Determinar requisição administrativa, mediante indenização ulterior em caso de dano","Efetuar ocupação temporária, passível de indenização pela utilização em ação própria","Implementar servidão administrativa, mediante prévia e justa indenização"],c:2},
+{mat:"CIVIL",q:"Otávio é proprietário de apartamento em condomínio e causa perturbação aos demais condôminos, descumprindo deveres. Sobre a sanção:",o:["Não pode ser punido por ser proprietário","Síndico pode aplicar multa sem convocar assembleia","Pode ser aplicada multa após deliberação em assembleia, nos termos dos arts. 1.336 e 1.337 do CC","Sanção só pode ser aplicada na via judicial"],c:2},
+{mat:"CIVIL",q:"Rodolfo e Marília divergem sobre guarda do filho Lorenzo. Sobre guarda compartilhada:",o:["Só é possível se houver acordo","É a regra, mesmo havendo divergência, salvo se um dos genitores declarar que não a deseja ou não houver aptidão","Não pode ser atribuída em caso de conflito","Juiz é obrigado a atribuir a um genitor ou outro, pois não existe guarda compartilhada"],c:1},
+{mat:"CIVIL",q:"Márcio vendeu imóvel a João, que registrou. Depois vendeu o mesmo imóvel a Cláudia, que também registrou? Quem é dono? Transfere-se propriedade mediante:",o:["Tradição apenas","Contrato apenas","Registro do título translativo no Registro de Imóveis","Posse apenas"],c:2},
+{mat:"CIVIL",q:"João dirigia e, para remover perigo iminente, deteriorou coisa alheia. Segundo art. 188 CC:",o:["É ato ilícito sempre","Não constitui ato ilícito a deterioração para remover perigo iminente","Deve indenizar sempre os pais da criança","Houve ato ilícito porque não avisou"],c:1},
+{mat:"PENAL",q:"Túlio e Alfredo combinaram roubo à joalheria. Alfredo com arma exige que Fernanda abra vitrine. Túlio fica na porta vigiando. Sobre condutas:",o:["Só Alfredo responde, Túlio é partícipe sem relevância","Ambos respondem por roubo, pois houve divisão de tarefas e unidade de desígnios","Só Túlio responde","Nenhum responde porque não levaram nada"],c:1},
+{mat:"PENAL",q:"Elias, reincidente específico em tráfico, foi flagrado vendendo um pino de cocaína e trazendo consigo outros pinos. Sobre art. 33 Lei 11.343/06:",o:["Responde por dois crimes em concurso formal","Responde por um único crime, pois vender e trazer consigo são verbos do mesmo tipo, de ação múltipla","Não responde porque é usuário","Responde por tráfico e uso em concurso"],c:1},
+{mat:"TRABALHO",q:"João da Silva se submeteu em novembro/2021 a processo seletivo para banco privado. Sobre Direito do Trabalho:",o:["Jornada normal é 8h diárias e 44h semanais","Jornada é 6h diárias para todos","Pode trabalhar 12h sem intervalo","Não há limite de jornada"],c:0},
+{mat:"PROCESSO CIVIL",q:"Na petição inicial, o autor deve indicar:",o:["Apenas nome do autor","Juízo, partes, fato, fundamento, pedido, valor da causa, provas e opção por audiência","Apenas sentença esperada","Somente endereço do réu"],c:1},
+{mat:"PENAL",q:"Sobre embriaguez completa decorrente de caso fortuito ou força maior, art. 28 §1º CP:",o:["Não exclui imputabilidade","Exclui a imputabilidade","Aumenta a pena","É causa de aumento apenas"],c:1},
+{mat:"CONSTITUCIONAL",q:"Martinez, estrangeiro residente no Brasil, quer ser professor universitário. Segundo CF art. 207 §1º:",o:["É proibido estrangeiro ser professor","É facultado às universidades admitir professores estrangeiros, na forma da lei","Exige naturalização prévia","Exige 4 anos de residência"],c:1},
+{mat:"ÉTICA",q:"Advogada Carolina faz publicidade irregular e estagiária Beatriz também. Sobre TAC:",o:["Não cabe TAC","É admitida celebração de TAC no âmbito do Conselho Federal ou Seccionais para fazer cessar publicidade","Só cabe para Carolina","Só cabe para estagiária"],c:1},
+{mat:"EMPRESARIAL",q:"Sobre consórcio de empresas e responsabilidade perante consumidores:",o:["Só uma responde","As consorciadas respondem solidariamente, nos termos da lei","Nenhuma responde","Só responde se houver culpa provada de cada uma"],c:1},
+{mat:"ADMINISTRATIVO",q:"Sobre ato administrativo, são atributos:",o:["Presunção de legitimidade, imperatividade e autoexecutoriedade","Apenas moralidade","Somente publicidade","Nenhum atributo"],c:0},
+{mat:"CONSTITUCIONAL",q:"Sobre ADI por omissão: declarada inconstitucionalidade por omissão, será dada ciência:",o:["Ao Presidente apenas","Ao Poder competente para adoção das providências necessárias","Ao Senado apenas","A ninguém"],c:1},
+{mat:"AMBIENTAL",q:"Perícia produzida no inquérito civil ou juízo cível pode ser aproveitada no processo penal?",o:["Não, nunca","Sim, instaurando-se o contraditório - art. 19, parágrafo único, Lei 9.605/98","Sim, sem contraditório","Só se for criminal"],c:1},
+{mat:"CIVIL",q:"João Paulo, Thiago e outros formam associação para fins não econômicos. É correto:",o:["Associação não pode desenvolver atividade econômica","Associação pode desenvolver atividade econômica, desde que sem finalidade lucrativa e valores revertidos para ela","Fundação é união de pessoas","Associação é complexo de bens"],c:1},
 ];
-let acertos=0, respondidas=0;
-const div=document.getElementById('quiz');
-questoes.forEach((questao,i)=>{
-  const card=document.createElement('div'); card.className='card';
-  card.innerHTML=`<b>${questao.q}</b>`;
-  questao.o.forEach((alt,j)=>{
-    const b=document.createElement('button'); b.innerText=String.fromCharCode(65+j)+") "+alt;
-    b.onclick=()=>{
-      if(card.dataset.ok) return; card.dataset.ok=1;
-      respondidas++;
-      if(j===questao.c){ b.classList.add('certa'); acertos++; }
-      else{ b.classList.add('errada'); card.children[questao.c+1].classList.add('certa'); }
-      if(respondidas===questoes.length) document.getElementById('resultado').innerText=`Você acertou ${acertos} de ${questoes.length} - ${acertos>=7?'APROVADO! 🎉':'Continue treinando! 💪'}`;
-    };
-    card.appendChild(b);
-  });
-  div.appendChild(card);
-});
+let acertos=0, resp=0; const div=document.getElementById('quiz');
+q.forEach((questao,i)=>{ const card=document.createElement('div'); card.className='card'; card.innerHTML=`<span class="materia">${questao.mat}</span><br><b>${i+1}. ${questao.q}</b>`;
+questao.o.forEach((alt,j)=>{ const b=document.createElement('button'); b.innerText=String.fromCharCode(65+j)+") "+alt;
+b.onclick=()=>{ if(card.dataset.ok) return; card.dataset.ok=1; resp++; if(j===questao.c){b.classList.add('certa'); acertos++;} else {b.classList.add('errada'); card.children[questao.c+2].classList.add('certa');}
+if(resp===q.length) document.getElementById('resultado').innerText=`Você acertou ${acertos} de ${q.length} - ${acertos>=10?'APROVADO! 🎉':'Continue treinando! 💪'}`; };
+card.appendChild(b); }); div.appendChild(card); });
 </script>
 </body>
 </html>
