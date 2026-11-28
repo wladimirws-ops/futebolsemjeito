@@ -19,7 +19,7 @@ label{display:block;padding:10px;margin:5px 0;background:#f9f9f9;border-radius:8
 <div id="timer">⏰ 5:00:00</div>
 <p style="text-align:center"><b>MODO TREINO - Mostra certo/errado na hora | 80 questões</b></p>
 <p id="progresso" style="text-align:center;font-weight:bold">Clique em COMEÇAR</p>
-<div id="tela-inicio" class="card"><p><b>41º Exame OAB - Treino</b><br>Precisa de 40 acertos. Agora mostra se acertou na hora!</p><button onclick="iniciar41()">▶️ COMEÇAR EXAME 41</button></div>
+<div id="tela-inicio" class="card"><p><b>41º Exame OAB - Treino</b><br>Precisa de 40 acertos.</p><button onclick="iniciar41()">▶️ COMEÇAR EXAME 41</button></div>
 <div id="tela-questao" class="card" style="display:none"><div id="questao"></div><div id="feedback"></div><button id="btnProxima" onclick="proxima41()">PRÓXIMA ➡️</button><button onclick="finalizar41()" style="background:#555">FINALIZAR</button></div>
 <div id="tela-fim" class="card" style="display:none"><h2 id="resultado"></h2><p id="detalhe"></p><button onclick="location.reload()">🔄 REFAZER</button></div>
 <script>
@@ -35,23 +35,22 @@ let questoes41 = [
 {pergunta:"8. Ética - Pedro Estrela, preso em flagrante por pirâmide financeira, se apresenta como advogado. Regra sobre prisão?", a:"Advogado só pode ser preso em flagrante por crime inafiançável, com presença de representante da OAB", b:"Pode ser preso por qualquer crime sem formalidade", c:"Não pode ser preso nunca", d:"Só com ordem do Conselho Federal", correta:"A"},
 {pergunta:"9. Filosofia - 'Quinhoar desigualmente aos desiguais, na medida em que se desigualam.' O que significa?", a:"Todos devem receber exatamente o mesmo", b:"Tratar igualmente os iguais e desigualmente os desiguais, na medida da desigualdade", c:"A igualdade proíbe qualquer diferença", d:"Só vale para direito penal", correta:"B"},
 {pergunta:"10. Filosofia - Sobre Hans Kelsen e Teoria Pura do Direito:", a:"Defende estudar Direito com moral e política juntas", b:"Busca estudar o Direito sem elementos estranhos, como moral, com foco na norma", c:"Negava hierarquia de normas", d:"Norma fundamental é escrita na Constituição", correta:"B"},
+{pergunta:"11. Civil - Sobre prescrição e decadência, assinale a correta:", a:"Prescrição pode ser alegada de ofício pelo juiz em qualquer caso", b:"A prescrição pode ser renunciada após consumada, expressa ou tacitamente", c:"Decadência nunca se interrompe", d:"Prescrição atinge o direito em si", correta:"B"},
+{pergunta:"12. Civil - Sobre negócio jurídico, quando há defeito por erro, assinale:", a:"Erro de cálculo sempre anula o negócio", b:"Erro sobre pessoa só anula se for essencial", c:"O erro substancial que poderia ser percebido por pessoa de diligência normal torna o negócio anulável", d:"Erro de direito nunca é relevante", correta:"C"},
+{pergunta:"13. Civil - Sobre responsabilidade civil, assinale a correta:", a:"Só há responsabilidade com culpa", b:"Em regra, a responsabilidade é subjetiva, mas há casos de responsabilidade objetiva previstos em lei", c:"Dano moral nunca é indenizável", d:"Excludente de ilicitude nunca afasta dever de indenizar", correta:"B"},
+{pergunta:"14. Civil - Sobre contratos, assinale a correta:", a:"Contrato só vale se for escrito", b:"A função social do contrato limita a liberdade de contratar", c:"Contrato de adesão não pode ser interpretado a favor do aderente", d:"Cláusula abusiva nunca pode ser anulada", correta:"B"},
+{pergunta:"15. Civil - Sobre posse, assinale a correta:", a:"Posse é só de quem é dono", b:"Possuidor de boa-fé tem direito aos frutos percebidos e a indenização por benfeitorias", c:"Posse nunca se transmite", d:"Esbulho não gera proteção possessória", correta:"B"},
+{pergunta:"16. Constitucional - Sobre direitos fundamentais, assinale:", a:"Os direitos fundamentais têm aplicação imediata e podem ser invocados contra o Estado e particulares", b:"Direitos fundamentais só valem contra o Estado", c:"Nenhum direito fundamental pode ser limitado", d:"Direitos sociais não são fundamentais", correta:"A"},
+{pergunta:"17. Constitucional - Sobre controle de constitucionalidade, assinale:", a:"No controle difuso, qualquer juiz pode afastar lei inconstitucional no caso concreto", b:"Só o STF pode fazer controle difuso", c:"Controle concentrado é feito por qualquer juiz", d:"ADI só pode ser proposta pelo Presidente", correta:"A"},
+{pergunta:"18. Constitucional - Sobre repartição de competências, assinale:", a:"Município pode legislar sobre direito penal", b:"Compete à União, Estados e DF legislar concorrentemente sobre direito civil, com normas gerais da União", c:"Estado não pode legislar sobre nada", d:"União tem competência exclusiva para tudo", correta:"B"},
+{pergunta:"19. Constitucional - Sobre Poder Judiciário, assinale:", a:"Juiz pode ser afastado sem processo", b:"Magistratura é vitalícia desde a posse", c:"São garantias da magistratura: vitaliciedade, inamovibilidade e irredutibilidade de subsídio", d:"Tribunal não pode julgar seus membros", correta:"C"},
+{pergunta:"20. Administrativo - Sobre ato administrativo, assinale:", a:"Ato administrativo nunca pode ser anulado", b:"A Administração pode anular seus atos ilegais e revogar os inconvenientes, respeitados direitos adquiridos", c:"Ato vinculado não pode ser controlado", d:"Motivo do ato nunca importa", correta:"B"},
 ];
-for(let i=10;i<80;i++){ questoes41.push({pergunta:`Questão ${i+1} - [AGUARDANDO LOTE - 11 a 80]`, a:"Alternativa A", b:"Alternativa B", c:"Alternativa C", d:"Alternativa D", correta:gabarito41[i]}); }
+for(let i=20;i<80;i++){ questoes41.push({pergunta:`Questão ${i+1} - [AGUARDANDO LOTE - 21 a 80]`, a:"Alternativa A", b:"Alternativa B", c:"Alternativa C", d:"Alternativa D", correta:gabarito41[i]}); }
 let atual=0, acertos=0, tempo=5*60*60, intervalo, jaRespondeu=false;
 function iniciar41(){ document.getElementById('tela-inicio').style.display='none'; document.getElementById('tela-questao').style.display='block'; atual=0; acertos=0; tempo=5*60*60; clearInterval(intervalo); intervalo=setInterval(()=>{ tempo--; let h=Math.floor(tempo/3600), m=Math.floor((tempo%3600)/60), s=tempo%60; document.getElementById('timer').innerText=`⏰ ${h}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`; if(tempo<=0){ clearInterval(intervalo); finalizar41(); } },1000); mostrar(); }
 function mostrar(){ jaRespondeu=false; let q=questoes41[atual]; document.getElementById('feedback').style.display='none'; document.getElementById('btnProxima').innerText="PRÓXIMA ➡️"; document.getElementById('progresso').innerText=`Questão ${atual+1} de 80 | Acertos: ${acertos}`; document.getElementById('questao').innerHTML=`<p><b>${q.pergunta}</b></p><label><input type="radio" name="resp" value="A"> A) ${q.a}</label><label><input type="radio" name="resp" value="B"> B) ${q.b}</label><label><input type="radio" name="resp" value="C"> C) ${q.c}</label><label><input type="radio" name="resp" value="D"> D) ${q.d}</label>`; }
-function proxima41(){
-  if(!jaRespondeu){
-    let sel=document.querySelector('input[name="resp"]:checked'); if(!sel){ alert("Marca uma alternativa!"); return; }
-    let q=questoes41[atual]; let fb=document.getElementById('feedback'); fb.style.display='block';
-    if(sel.value===q.correta){ acertos++; fb.style.background="#d4edda"; fb.innerText="✅ ACERTOU! Boa! Continua!"; }
-    else{ fb.style.background="#f8d7da"; fb.innerText=`❌ ERROU! Você marcou ${sel.value}, a certa é ${q.correta}.`; }
-    document.getElementById('progresso').innerText=`Questão ${atual+1} de 80 | Acertos: ${acertos}`;
-    document.getElementById('btnProxima').innerText="CONTINUAR ➡️"; jaRespondeu=true; return;
-  } else {
-    atual++; if(atual<80) mostrar(); else finalizar41();
-  }
-}
+function proxima41(){ if(!jaRespondeu){ let sel=document.querySelector('input[name="resp"]:checked'); if(!sel){ alert("Marca uma alternativa!"); return; } let q=questoes41[atual]; let fb=document.getElementById('feedback'); fb.style.display='block'; if(sel.value===q.correta){ acertos++; fb.style.background="#d4edda"; fb.innerText="✅ ACERTOU! Boa! Continua!"; } else{ fb.style.background="#f8d7da"; fb.innerText=`❌ ERROU! Você marcou ${sel.value}, a certa é ${q.correta}.`; } document.getElementById('progresso').innerText=`Questão ${atual+1} de 80 | Acertos: ${acertos}`; document.getElementById('btnProxima').innerText="CONTINUAR ➡️"; jaRespondeu=true; return; } else { atual++; if(atual<80) mostrar(); else finalizar41(); } }
 function finalizar41(){ clearInterval(intervalo); document.getElementById('tela-questao').style.display='none'; document.getElementById('tela-fim').style.display='block'; let passou=acertos>=40?"APROVADO ✅":"REPROVADO ❌"; document.getElementById('resultado').innerText=`${passou} - ${acertos}/80`; document.getElementById('detalhe').innerText=`Você precisava de 40 acertos.`; }
 </script>
 </body>
