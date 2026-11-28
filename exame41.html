@@ -1,64 +1,97 @@
-<!-- EXAME 41 COMPLETO -->
-<div id="exame41" style="display:none; max-width:800px; margin:auto; padding:15px;">
-  <h2>41º Exame OAB - 1ª Fase</h2>
-  <div id="timer41" style="font-size:28px; font-weight:bold; text-align:center; color:#ff0000;">⏰ 5:00:00</div>
-  <p style="text-align:center;">Ritmo ideal: 3min 45s por questão | 80 questões | 5 horas</p>
-  <p id="progresso41" style="text-align:center; font-weight:bold;">Questão 1 de 80</p>
-  <div id="questao41"></div>
-  <button onclick="proxima41()" style="width:100%; padding:12px; margin-top:15px; font-size:18px;">PRÓXIMA ➡️</button>
-  <button onclick="finalizar41()" style="width:100%; padding:12px; margin-top:10px;">FINALIZAR PROVA</button>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GOL DA OAB - Exame 41</title>
+<style>
+body{font-family:Arial;max-width:800px;margin:auto;padding:15px;background:#f4f4f4}
+h1{text-align:center}
+#timer{font-size:32px;font-weight:bold;text-align:center;color:#d00;background:#fff;padding:10px;border-radius:10px}
+.card{background:#fff;padding:15px;border-radius:10px;margin-top:15px}
+button{width:100%;padding:14px;font-size:18px;margin-top:10px;border:none;border-radius:10px;background:#1e7e34;color:#fff;font-weight:bold}
+label{display:block;padding:10px;margin:5px 0;background:#f9f9f9;border-radius:8px}
+</style>
+</head>
+<body>
+<h1>⚽ GOL DA OAB - Exame 41</h1>
+<div id="timer">⏰ 5:00:00</div>
+<p style="text-align:center"><b>80 questões | 5 horas | Ritmo ideal: 3min 45s por questão</b></p>
+<p id="progresso" style="text-align:center;font-weight:bold">Clique em COMEÇAR para iniciar</p>
+
+<div id="tela-inicio" class="card">
+<p><b>41º Exame OAB - 1ª Fase</b><br>Prova real: 5h para 80 questões. Precisa de 40 acertos para passar.</p>
+<button onclick="iniciar41()">▶️ COMEÇAR EXAME 41</button>
+</div>
+
+<div id="tela-questao" class="card" style="display:none">
+<div id="questao"></div>
+<button onclick="proxima41()">PRÓXIMA ➡️</button>
+<button onclick="finalizar41()" style="background:#555">FINALIZAR PROVA</button>
+</div>
+
+<div id="tela-fim" class="card" style="display:none">
+<h2 id="resultado"></h2>
+<p id="detalhe"></p>
+<button onclick="location.reload()">🔄 REFAZER PROVA</button>
 </div>
 
 <script>
 const gabarito41 = ["B","A","B","D","A","B","C","C","B","B","B","C","B","B","B","A","A","B","C","B","A","B","A","C","D","C","D","C","B","C","D","A","D","C","C","D","D","B","D","A","D","D","A","B","A","A","C","D","A","B","D","D","B","B","C","A","D","C","D","A","D","C","A","A","C","A","C","C","D","A","A","C","D","C","B","C","D","B","A","A"];
 
-// Aqui tu cola os enunciados do PDF oficial, um por linha, no mesmo formato dos exames 36-40
 let questoes41 = [];
-for(let i=0; i<80; i++){
+for(let i=0;i<80;i++){
   questoes41.push({
-    pergunta: `Questão ${i+1} - [COLAR ENUNCIADO DO PDF OFICIAL AQUI]`,
+    pergunta: `Questão ${i+1} - [COLAR ENUNCIADO OFICIAL AQUI]`,
     a: "Alternativa A", b: "Alternativa B", c: "Alternativa C", d: "Alternativa D",
     correta: gabarito41[i]
   });
 }
 
-let atual41 = 0, acertos41 = 0, tempo41 = 5*60*60, timer41Interval;
+let atual=0, acertos=0, tempo=5*60*60, intervalo;
 
 function iniciar41(){
-  document.getElementById('exame41').style.display='block';
-  atual41=0; acertos41=0; tempo41=5*60*60;
-  clearInterval(timer41Interval);
-  timer41Interval=setInterval(()=>{
-    tempo41--;
-    let h=Math.floor(tempo41/3600), m=Math.floor((tempo41%3600)/60), s=tempo41%60;
-    document.getElementById('timer41').innerText=`⏰ ${h}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
-    if(tempo41===1800) alert("⚠️ Faltam 30 min! Acelera!");
-    if(tempo41<=0){ clearInterval(timer41Interval); alert("⏰ Tempo esgotado!"); finalizar41(); }
+  document.getElementById('tela-inicio').style.display='none';
+  document.getElementById('tela-questao').style.display='block';
+  atual=0; acertos=0; tempo=5*60*60;
+  clearInterval(intervalo);
+  intervalo=setInterval(()=>{
+    tempo--;
+    let h=Math.floor(tempo/3600), m=Math.floor((tempo%3600)/60), s=tempo%60;
+    document.getElementById('timer').innerText=`⏰ ${h}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+    if(tempo===1800) alert("⚠️ Faltam 30 min! Acelera!");
+    if(tempo<=0){ clearInterval(intervalo); alert("⏰ Tempo esgotado!"); finalizar41(); }
   },1000);
-  mostrar41();
+  mostrar();
 }
 
-function mostrar41(){
-  let q=questoes41[atual41];
-  document.getElementById('progresso41').innerText=`Questão ${atual41+1} de 80`;
-  document.getElementById('questao41').innerHTML=`
+function mostrar(){
+  let q=questoes41[atual];
+  document.getElementById('progresso').innerText=`Questão ${atual+1} de 80 | Acertos até agora: ${acertos}`;
+  document.getElementById('questao').innerHTML=`
     <p><b>${q.pergunta}</b></p>
-    <label><input type="radio" name="resp41" value="A"> A) ${q.a}</label><br>
-    <label><input type="radio" name="resp41" value="B"> B) ${q.b}</label><br>
-    <label><input type="radio" name="resp41" value="C"> C) ${q.c}</label><br>
-    <label><input type="radio" name="resp41" value="D"> D) ${q.d}</label><br>`;
+    <label><input type="radio" name="resp" value="A"> A) ${q.a}</label>
+    <label><input type="radio" name="resp" value="B"> B) ${q.b}</label>
+    <label><input type="radio" name="resp" value="C"> C) ${q.c}</label>
+    <label><input type="radio" name="resp" value="D"> D) ${q.d}</label>`;
 }
 
 function proxima41(){
-  let sel=document.querySelector('input[name="resp41"]:checked');
-  if(sel && sel.value===questoes41[atual41].correta) acertos41++;
-  atual41++;
-  if(atual41<80) mostrar41(); else finalizar41();
+  let sel=document.querySelector('input[name="resp"]:checked');
+  if(!sel){ alert("Marca uma alternativa!"); return; }
+  if(sel.value===questoes41[atual].correta) acertos++;
+  atual++;
+  if(atual<80) mostrar(); else finalizar41();
 }
 
 function finalizar41(){
-  clearInterval(timer41Interval);
-  let nota = acertos41 >= 40 ? "APROVADO ✅" : "REPROVADO ❌ - Precisa de 40";
-  alert(`FIM DO 41º EXAME\nAcertos: ${acertos41}/80\n${nota}`);
+  clearInterval(intervalo);
+  document.getElementById('tela-questao').style.display='none';
+  document.getElementById('tela-fim').style.display='block';
+  let passou = acertos>=40 ? "APROVADO ✅" : "REPROVADO ❌";
+  document.getElementById('resultado').innerText=`${passou} - ${acertos}/80`;
+  document.getElementById('detalhe').innerText=`Você precisava de 40 acertos. Tempo restante: ${document.getElementById('timer').innerText}`;
 }
 </script>
+</body>
+</html>
