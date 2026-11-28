@@ -16,82 +16,31 @@ label{display:block;padding:10px;margin:5px 0;background:#f9f9f9;border-radius:8
 <body>
 <h1>⚽ GOL DA OAB - Exame 41</h1>
 <div id="timer">⏰ 5:00:00</div>
-<p style="text-align:center"><b>80 questões | 5 horas | Ritmo ideal: 3min 45s por questão</b></p>
-<p id="progresso" style="text-align:center;font-weight:bold">Clique em COMEÇAR para iniciar</p>
-
-<div id="tela-inicio" class="card">
-<p><b>41º Exame OAB - 1ª Fase</b><br>Prova real: 5h para 80 questões. Precisa de 40 acertos para passar.</p>
-<button onclick="iniciar41()">▶️ COMEÇAR EXAME 41</button>
-</div>
-
-<div id="tela-questao" class="card" style="display:none">
-<div id="questao"></div>
-<button onclick="proxima41()">PRÓXIMA ➡️</button>
-<button onclick="finalizar41()" style="background:#555">FINALIZAR PROVA</button>
-</div>
-
-<div id="tela-fim" class="card" style="display:none">
-<h2 id="resultado"></h2>
-<p id="detalhe"></p>
-<button onclick="location.reload()">🔄 REFAZER PROVA</button>
-</div>
-
+<p style="text-align:center"><b>80 questões | 5 horas | Ritmo: 3min 45s por questão</b></p>
+<p id="progresso" style="text-align:center;font-weight:bold">Clique em COMEÇAR</p>
+<div id="tela-inicio" class="card"><p><b>41º Exame OAB - 1ª Fase</b><br>Precisa de 40 acertos.</p><button onclick="iniciar41()">▶️ COMEÇAR EXAME 41</button></div>
+<div id="tela-questao" class="card" style="display:none"><div id="questao"></div><button onclick="proxima41()">PRÓXIMA ➡️</button><button onclick="finalizar41()" style="background:#555">FINALIZAR</button></div>
+<div id="tela-fim" class="card" style="display:none"><h2 id="resultado"></h2><p id="detalhe"></p><button onclick="location.reload()">🔄 REFAZER</button></div>
 <script>
 const gabarito41 = ["B","A","B","D","A","B","C","C","B","B","B","C","B","B","B","A","A","B","C","B","A","B","A","C","D","C","D","C","B","C","D","A","D","C","C","D","D","B","D","A","D","D","A","B","A","A","C","D","A","B","D","D","B","B","C","A","D","C","D","A","D","C","A","A","C","A","C","C","D","A","A","C","D","C","B","C","D","B","A","A"];
-
-let questoes41 = [];
-for(let i=0;i<80;i++){
-  questoes41.push({
-    pergunta: `Questão ${i+1} - [COLAR ENUNCIADO OFICIAL AQUI]`,
-    a: "Alternativa A", b: "Alternativa B", c: "Alternativa C", d: "Alternativa D",
-    correta: gabarito41[i]
-  });
-}
-
+let questoes41 = [
+{pergunta:"1. Ética - Daniel foi suspenso por 6 meses por assédio. Cumpriu há mais de 1 ano, mas a pena criminal ainda está em execução. Ele pode pedir reabilitação?", a:"Sim, pois já passou 1 ano, é direito subjetivo", b:"Não, pois mesmo com bom comportamento, depende também da reabilitação criminal", c:"Sim, com bom comportamento, pois há independência entre instâncias", d:"Sim, mas deve pedir direto no Conselho Federal", correta:"B"},
+{pergunta:"2. Ética - Saulo foi preso e pediu para advogada Janete ver os motivos da prisão e a investigação. Como fica o acesso?", a:"Pode examinar autos de flagrante e investigação mesmo sem procuração, mas se houver sigilo precisa de procuração", b:"Só pode com procuração em qualquer caso", c:"Não pode examinar investigação em andamento", d:"É vedado fornecer autos incompletos", correta:"A"},
+{pergunta:"3. Ética - João Pedro, por vingança, contrata Beraldo para ação de cobrança temerária contra ex-sócio. O que Beraldo deve fazer?", a:"Propor a ação, pois deve obedecer o cliente", b:"Deve recusar patrocinar lide temerária, pois é dever ético", c:"Pode propor, desde que avise o juiz", d:"Pode propor e depois desistir", correta:"B"},
+{pergunta:"4. Ética - Ana Júlia, recém-aprovada, quer agir com ética. Qual conduta é dever ético?", a:"Cobrar honorários abaixo do mínimo", b:"Guardar sigilo profissional e agir com boa-fé", c:"Divulgar segredo do cliente", d:"Aceitar causa contra ex-cliente sem cautela", correta:"B"},
+{pergunta:"5. Ética - Gilson, recém-inscrito, dúvida entre sociedade unipessoal e simples. Qual regra vale?", a:"Não pode constituir sociedade unipessoal", b:"Pode constituir sociedade unipessoal de advocacia", c:"Só pode se tiver 5 anos de inscrição", d:"Só pode sociedade com outro advogado", correta:"B"},
+{pergunta:"6. Ética - Marina prestou consultoria tributária para empresa. Como pode ser a consultoria?", a:"Só por escrito e com contrato", b:"Pode ser por escrito ou verbal, se as partes acordarem, mesmo sem mandato ou contrato formal", c:"Se verbal, precisa de contrato escrito", d:"Só se houver mandato", correta:"B"},
+{pergunta:"7. Ética - Atena (médica) e Dionísio (advogado) casados, moram em casa alugada. Sobre domicílio profissional?", a:"Não pode advogar onde mora", b:"Domicílio profissional é onde mantém escritório, mesmo com residência em outro local", c:"Casamento com médica impede advocacia", d:"Só pode advogar onde nasceu", correta:"B"},
+{pergunta:"8. Ética - Pedro Estrela, preso em flagrante por pirâmide financeira, se apresenta como advogado. Regra sobre prisão?", a:"Advogado só pode ser preso em flagrante por crime inafiançável, com presença de representante da OAB", b:"Pode ser preso por qualquer crime sem formalidade", c:"Não pode ser preso nunca", d:"Só com ordem do Conselho Federal", correta:"A"},
+{pergunta:"9. Filosofia - 'Quinhoar desigualmente aos desiguais, na medida em que se desigualam.' O que significa?", a:"Todos devem receber exatamente o mesmo", b:"Tratar igualmente os iguais e desigualmente os desiguais, na medida da desigualdade", c:"A igualdade proíbe qualquer diferença", d:"Só vale para direito penal", correta:"B"},
+{pergunta:"10. Filosofia - Sobre Hans Kelsen e Teoria Pura do Direito:", a:"Defende estudar Direito com moral e política juntas", b:"Busca estudar o Direito sem elementos estranhos, como moral, com foco na norma", c:"Negava hierarquia de normas", d:"Norma fundamental é escrita na Constituição", correta:"B"},
+];
+for(let i=10;i<80;i++){ questoes41.push({pergunta:`Questão ${i+1} - [AGUARDANDO LOTE - 11 a 80]`, a:"Alternativa A", b:"Alternativa B", c:"Alternativa C", d:"Alternativa D", correta:gabarito41[i]}); }
 let atual=0, acertos=0, tempo=5*60*60, intervalo;
-
-function iniciar41(){
-  document.getElementById('tela-inicio').style.display='none';
-  document.getElementById('tela-questao').style.display='block';
-  atual=0; acertos=0; tempo=5*60*60;
-  clearInterval(intervalo);
-  intervalo=setInterval(()=>{
-    tempo--;
-    let h=Math.floor(tempo/3600), m=Math.floor((tempo%3600)/60), s=tempo%60;
-    document.getElementById('timer').innerText=`⏰ ${h}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
-    if(tempo===1800) alert("⚠️ Faltam 30 min! Acelera!");
-    if(tempo<=0){ clearInterval(intervalo); alert("⏰ Tempo esgotado!"); finalizar41(); }
-  },1000);
-  mostrar();
-}
-
-function mostrar(){
-  let q=questoes41[atual];
-  document.getElementById('progresso').innerText=`Questão ${atual+1} de 80 | Acertos até agora: ${acertos}`;
-  document.getElementById('questao').innerHTML=`
-    <p><b>${q.pergunta}</b></p>
-    <label><input type="radio" name="resp" value="A"> A) ${q.a}</label>
-    <label><input type="radio" name="resp" value="B"> B) ${q.b}</label>
-    <label><input type="radio" name="resp" value="C"> C) ${q.c}</label>
-    <label><input type="radio" name="resp" value="D"> D) ${q.d}</label>`;
-}
-
-function proxima41(){
-  let sel=document.querySelector('input[name="resp"]:checked');
-  if(!sel){ alert("Marca uma alternativa!"); return; }
-  if(sel.value===questoes41[atual].correta) acertos++;
-  atual++;
-  if(atual<80) mostrar(); else finalizar41();
-}
-
-function finalizar41(){
-  clearInterval(intervalo);
-  document.getElementById('tela-questao').style.display='none';
-  document.getElementById('tela-fim').style.display='block';
-  let passou = acertos>=40 ? "APROVADO ✅" : "REPROVADO ❌";
-  document.getElementById('resultado').innerText=`${passou} - ${acertos}/80`;
-  document.getElementById('detalhe').innerText=`Você precisava de 40 acertos. Tempo restante: ${document.getElementById('timer').innerText}`;
-}
+function iniciar41(){ document.getElementById('tela-inicio').style.display='none'; document.getElementById('tela-questao').style.display='block'; atual=0; acertos=0; tempo=5*60*60; clearInterval(intervalo); intervalo=setInterval(()=>{ tempo--; let h=Math.floor(tempo/3600), m=Math.floor((tempo%3600)/60), s=tempo%60; document.getElementById('timer').innerText=`⏰ ${h}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`; if(tempo===1800) alert("⚠️ Faltam 30 min!"); if(tempo<=0){ clearInterval(intervalo); alert("⏰ Tempo esgotado!"); finalizar41(); } },1000); mostrar(); }
+function mostrar(){ let q=questoes41[atual]; document.getElementById('progresso').innerText=`Questão ${atual+1} de 80 | Acertos: ${acertos}`; document.getElementById('questao').innerHTML=`<p><b>${q.pergunta}</b></p><label><input type="radio" name="resp" value="A"> A) ${q.a}</label><label><input type="radio" name="resp" value="B"> B) ${q.b}</label><label><input type="radio" name="resp" value="C"> C) ${q.c}</label><label><input type="radio" name="resp" value="D"> D) ${q.d}</label>`; }
+function proxima41(){ let sel=document.querySelector('input[name="resp"]:checked'); if(!sel){ alert("Marca uma alternativa!"); return; } if(sel.value===questoes41[atual].correta) acertos++; atual++; if(atual<80) mostrar(); else finalizar41(); }
+function finalizar41(){ clearInterval(intervalo); document.getElementById('tela-questao').style.display='none'; document.getElementById('tela-fim').style.display='block'; let passou=acertos>=40?"APROVADO ✅":"REPROVADO ❌"; document.getElementById('resultado').innerText=`${passou} - ${acertos}/80`; document.getElementById('detalhe').innerText=`Você precisava de 40 acertos.`; }
 </script>
 </body>
 </html>
